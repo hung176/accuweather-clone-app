@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { randomImg } from '../ultils/randomImg';
+import { random } from '../ultils/random';
+import { arrImg } from '../assets';
 import { getTopCities } from '../reducers/topCitiesReducer';
 import { useStateValue } from '../reducers';
 import Search from '../components/Search';
@@ -9,17 +10,17 @@ import ListTopCities from '../components/ListTopCities';
 
 const Home = () => {
   const [{ topCities: { loading, error, cities } }, dispatch] = useStateValue();
+  const [backgroundImg, ] = useState(random(arrImg));
 
   useEffect(() => {
     getTopCities({ quantity: 50, dispatch });
-
   }, []);
 
   return (
     <div>
       <div
         className="bg-no-repeat bg-cover bg-center border-b-2 border-red-400"
-        style={{ backgroundImage: `url(${randomImg()})`}}
+        style={{ backgroundImage: `url(${backgroundImg})`}}
       >
         <Nav pos="fixed" />
         <div className="mt-12 pt-2">
@@ -27,12 +28,12 @@ const Home = () => {
         </div>
 
 
-        <div className="pb-28 pt-4">
+        <div className="pb-20 pt-4">
           <ListHistorySearch />
         </div>
       </div>
 
-      <div className="w-full bg-gray-100">
+      <div className="w-full">
         {loading && <div>loading...</div>}
         {cities.length && (
           <div className="pb-4 w-full flex flex-col items-center">

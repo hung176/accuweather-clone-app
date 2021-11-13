@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getCurrentLocation } from '../reducers/currentLocationReducer';
+import { getAutocompleteSearch } from '../reducers/autocompleteReducer';
+import { REMOVE_AUTOCOMPLETE_SEARCH } from '../reducers/autocompleteReducer';
 import { useStateValue } from '../reducers';
 import { SearchIcon, XIcon, LocationMarkerIcon } from '@heroicons/react/outline';
-
-import { baseApiUrl, apiKey } from '../consts/api';
+import { removeSpaces } from '../ultils/removeSpaces';
 
 const Search = ({  }) => {
   const [border, setBorder] = React.useState('rounded-md');
   const [showOption, setShowOption] = React.useState(false);
-  const [value, setValue] = React.useState('');
-  const options = ['BacNinh, vietNam'];
+  const [query, setQuery] = React.useState('');
+  const navigate = useNavigate();
 
-  const [{ currentLocation }, dispatch] = useStateValue();
-  console.log(currentLocation)
+  const [{ autocomplete }, dispatch] = useStateValue();
 
   const onFocus = (e) => {
     setBorder('rounded-t-md border-b-2 border-red-400');
@@ -24,12 +25,17 @@ const Search = ({  }) => {
   };
 
   const handleCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
+    getCurrentLocation({ dispatch, navigate });
+  };
 
-      getCurrentLocation({ lat, lon, dispatch });
-    });
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    getAutocompleteSearch({query: e.target.value, dispatch});
+  };
+
+  const goToCitySearched = (location) => {
+    const { countryId, localizedName, locationKey } = location;
+    navigate(`en/${removeSpaces(countryId)}/${removeSpaces(localizedName)}/current/${locationKey}`);
   };
 
   return (
@@ -41,18 +47,23 @@ const Search = ({  }) => {
         <input
           type="text"
           name="search"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={query}
+          onChange={handleChange}
           placeholder="Search Location"
           autoComplete="off"
           className="ml-3 w-full h-full text-xl focus:outline-none"
           onFocus={onFocus}
           onBlur={onBlur}
         />
-        {value && (
+        {query && (
           <XIcon
             className="w-8 h-8 text-gray-600"
-            onClick={() => setValue('')}
+            onClick={() => {
+              dispatch({
+                type: REMOVE_AUTOCOMPLETE_SEARCH,
+              });
+              setQuery('');
+            }}
           />
         )}
       </div>
@@ -68,9 +79,13 @@ const Search = ({  }) => {
               <span className=" font-light">Use your current location</span>
             </li>
 
-            {options.map(op => (
-              <li className={`flex items-center py-2 px-4 cursor-pointer hover:bg-gray-200 hover:text-gray-600`}>
-                <span className="text-xl" onClick={() => console.log('fdfdfdfd')}>{op}</span>
+            {autocomplete.map(lo => (
+              <li
+                key={lo.locationKey}
+                className={`flex items-center py-2 px-4 cursor-pointer hover:bg-gray-200 hover:text-gray-600`}
+                onMouseDown={() => goToCitySearched(lo)}
+              >
+                <span className="text-xl">{`${lo.localizedName}, ${lo.administrativeArea.LocalizedName}, ${lo.countryId}`}</span>
               </li>
             ))}
           </ul>
