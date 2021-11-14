@@ -1,21 +1,45 @@
 import React from 'react';
-import pick from 'lodash.pick';
-import omit from 'lodash.omit';
-import CurrentWeatherCard from './CurrentWeatherCard';
-import DayWeatherCard from './DayWeatherCard';
+import Card from './Card';
+import SunMoon from './SunMoon';
+import {
+  currentParamsIndex,
+  dayParamsIndex,
+  nightParamsIndex,
+} from '../consts/weatherParamsIndex';
 
 const CurrentWeatherPage = ({ currentWeather, oneDayForecast }) => {
+  const { loading: currentLoading, error: currentError, conditions: currentConditions } = currentWeather;
+  const { loading: oneDayLoading, error: oneDayError, conditions: oneDayConditions } = oneDayForecast;
 
   return (
     <div>
-      <CurrentWeatherCard currentWeather={currentWeather} />
-      {/* <DayWeatherCard
-        loading={loading}
-        error={error}
-        generalInfo={generalInfo}
-        dayForecast={dayForecast}
-      /> */}
-      {/* <NightWeatherCard /> */}
+      <Card
+        header="current weather"
+        loading={currentLoading}
+        error={currentError}
+        conditions={currentConditions}
+        paramsIndex={currentParamsIndex}
+      />
+      <Card
+        header="day"
+        loading={oneDayLoading}
+        error={oneDayError}
+        conditions={oneDayConditions.dayForecast || {}}
+        paramsIndex={dayParamsIndex}
+      />
+       <Card
+        header="night"
+        loading={oneDayLoading}
+        error={oneDayError}
+        conditions={oneDayConditions.nightForecast || {}}
+        paramsIndex={nightParamsIndex}
+      />
+      <SunMoon
+        sunRise={oneDayConditions.sunRise}
+        sunSet={oneDayConditions.sunSet}
+        moonRise={oneDayConditions.moonRise}
+        moonSet={oneDayConditions.moonSet}
+      />
     </div>
   );
 };

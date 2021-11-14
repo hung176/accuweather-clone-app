@@ -3,7 +3,7 @@ import { iconUrl } from '../consts/api';
 
 export const pickCurrentWeatherData = (data) => {
   return {
-    currentTime: moment(data[0].EpochTime * 1000).format('LT'),
+    time: moment(data[0].EpochTime * 1000).format('LT'),
     temperature: {
       metric: `${data[0].Temperature.Metric.Value.toFixed()}°${data[0].Temperature.Metric.Unit}`,
       imperial: `${data[0].Temperature.Imperial.Value.toFixed()}°${data[0].Temperature.Imperial.Unit}`,
@@ -51,55 +51,40 @@ export const pickCurrentWeatherData = (data) => {
 
 export const pickOneDayForecastData = (data) => {
   const dailyForecast = data.DailyForecasts[0];
+  const maxUVIndex = dailyForecast.AirAndPollen.find(p => p.Name === 'UVIndex');
   return {
-    date: moment(dailyForecast.EpochDate * 1000).format('MM/DD'),
     sunRise: moment(dailyForecast.Sun.EpochRise * 1000).format('LT'),
     sunSet: moment(dailyForecast.Sun.EpochSet * 1000).format('LT'),
     moonRise: moment(dailyForecast.Moon.EpochSet * 1000).format('LT'),
     moonSet: moment(dailyForecast.Moon.EpochSet * 1000).format('LT'),
-    temperature: {
-      min: { value: (dailyForecast.Temperature.Minimum.Value).toFixed(), unit: dailyForecast.Temperature.Minimum.Unit },
-      max: { value: (dailyForecast.Temperature.Maximum.Value).toFixed(), unit: dailyForecast.Temperature.Maximum.Unit }
-    },
-    realFeel: {
-      min: { value: (dailyForecast.RealFeelTemperature.Minimum.Value).toFixed(), unit: dailyForecast.RealFeelTemperature.Minimum.Unit },
-      max: { value: (dailyForecast.RealFeelTemperature.Maximum.Value).toFixed(), unit: dailyForecast.RealFeelTemperature.Maximum.Unit },
-    },
-    realFeelShade: {
-      min: { value: (dailyForecast.RealFeelTemperatureShade.Minimum.Value).toFixed(), unit: dailyForecast.RealFeelTemperatureShade.Minimum.Unit },
-      max: { value: (dailyForecast.RealFeelTemperatureShade.Maximum.Value).toFixed(), unit: dailyForecast.RealFeelTemperatureShade.Maximum.Unit },
-    },
     dayForecast: {
+      time: moment(dailyForecast.EpochDate * 1000).format('MM/DD'),
+      maxUVIndex: `${maxUVIndex.Value} ${maxUVIndex.Category}`,
       weatherIcon: `${iconUrl}/${dailyForecast.Day.Icon}.svg`,
       weatherText: dailyForecast.Day.IconPhrase,
-      thunderProbability: dailyForecast.Day.ThunderstormProbability,
-      rainProbability: dailyForecast.Day.RainProbability,
-      wind: {
-        direction: { localized: dailyForecast.Day.Wind.Direction.Localized, english: dailyForecast.Day.Wind.Direction.English },
-        speed: { value: (dailyForecast.Day.Wind.Speed.Value).toFixed(), unit: dailyForecast.Day.Wind.Speed.Unit },
-      },
-      windGust: {
-        direction: { localized: dailyForecast.Day.WindGust.Direction.Localized, english: dailyForecast.Day.WindGust.Direction.English },
-        speed: { value: (dailyForecast.Day.WindGust.Speed.Value).toFixed(), unit: dailyForecast.Day.WindGust.Speed.Unit },
-      },
-      precipitation: { value: dailyForecast.Day.TotalLiquid.Value, unit: dailyForecast.Day.TotalLiquid.Unit },
-      cloudCover: dailyForecast.Day.CloudCover,
+      realFeel: `${dailyForecast.RealFeelTemperature.Maximum.Value.toFixed()}°`,
+      realFeelShade: `${dailyForecast.RealFeelTemperatureShade.Maximum.Value.toFixed()}°`,
+      temperature: `${dailyForecast.Temperature.Maximum.Value.toFixed()}°${dailyForecast.Temperature.Maximum.Unit}`,
+      thunderProbability: `${dailyForecast.Day.ThunderstormProbability}%`,
+      rainProbability: `${dailyForecast.Day.RainProbability}%`,
+      wind: `${dailyForecast.Day.Wind.Direction.Localized} ${dailyForecast.Day.Wind.Speed.Value.toFixed()} ${dailyForecast.Day.Wind.Speed.Unit}`,
+      windGust: `${dailyForecast.Day.WindGust.Direction.Localized} ${dailyForecast.Day.WindGust.Speed.Value.toFixed()} ${dailyForecast.Day.WindGust.Speed.Unit}`,
+      precipitation: `${dailyForecast.Day.TotalLiquid.Value} ${dailyForecast.Day.TotalLiquid.Unit}`,
+      cloudCover: `${dailyForecast.Day.CloudCover}%`,
     },
     nightForecast: {
+      time: moment(dailyForecast.EpochDate * 1000).format('MM/DD'),
       weatherIcon: `${iconUrl}/${dailyForecast.Night.Icon}.svg`,
       weatherText: dailyForecast.Night.IconPhrase,
-      thunderProbability: dailyForecast.Night.ThunderstormProbability,
-      rainProbability: dailyForecast.Night.RainProbability,
-      wind: {
-        direction: { localized: dailyForecast.Night.Wind.Direction.Localized, english: dailyForecast.Night.Wind.Direction.English },
-        speed: { value: (dailyForecast.Night.Wind.Speed.Value).toFixed(), unit: dailyForecast.Night.Wind.Speed.Unit },
-      },
-      windGust: {
-        direction: { localized: dailyForecast.Night.WindGust.Direction.Localized, english: dailyForecast.Night.WindGust.Direction.English },
-        speed: { value: (dailyForecast.Night.WindGust.Speed.Value).toFixed(), unit: dailyForecast.Night.WindGust.Speed.Unit },
-      },
-      precipitation: { value: dailyForecast.Night.TotalLiquid.Value, unit: dailyForecast.Night.TotalLiquid.Unit },
-      cloudCover: dailyForecast.Night.CloudCover,
+      realFeel: `${dailyForecast.RealFeelTemperature.Minimum.Value.toFixed()}°`,
+      realFeelShade: `${dailyForecast.RealFeelTemperatureShade.Minimum.Value.toFixed()}°`,
+      temperature: `${dailyForecast.Temperature.Minimum.Value.toFixed()}°${dailyForecast.Temperature.Minimum.Unit}`,
+      thunderProbability: `${dailyForecast.Night.ThunderstormProbability}%`,
+      rainProbability: `${dailyForecast.Night.RainProbability}%`,
+      wind: `${dailyForecast.Night.Wind.Direction.Localized} ${dailyForecast.Night.Wind.Speed.Value.toFixed()} ${dailyForecast.Night.Wind.Speed.Unit}`,
+      windGust: `${dailyForecast.Night.WindGust.Direction.Localized} ${dailyForecast.Night.WindGust.Speed.Value.toFixed()} ${dailyForecast.Night.WindGust.Speed.Unit}`,
+      precipitation: `${dailyForecast.Night.TotalLiquid.Value} ${dailyForecast.Night.TotalLiquid.Unit}`,
+      cloudCover: `${dailyForecast.Night.CloudCover}%`,
     },
   };
 };

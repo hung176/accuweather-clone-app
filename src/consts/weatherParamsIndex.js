@@ -10,3 +10,23 @@ export const currentParamsIndex = {
   visibility: 'Visibility',
   cloudCeiling: 'Cloud Ceiling',
 };
+
+export const dayParamsIndex = {
+  maxUVIndex: 'Max UV Index',
+  wind: 'Wind',
+  windGust: 'Wind Gusts',
+  rainProbability:'Probability of Precipitation',
+  thunderProbability: 'Probability of Thunderstorms',
+  precipitation: 'Precipitation',
+  cloudCover: 'Cloud Cover',
+};
+
+export const nightParamsIndex = {
+  wind: 'Wind',
+  windGust: 'Wind Gusts',
+  rainProbability:'Probability of Precipitation',
+  thunderProbability: 'Probability of Thunderstorms',
+  precipitation: 'Precipitation',
+  cloudCover: 'Cloud Cover',
+};
+

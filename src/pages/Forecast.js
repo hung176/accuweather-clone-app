@@ -13,12 +13,10 @@ const Forecast = () => {
   const navigate = useNavigate();
   const { country, city, forecastType, cityCode } = useParams();
 
-  console.log(currentWeather);
-
   useEffect(() => {
     if (forecastType === 'current') {
       getCurrentWeather({ dispatch, locationKey: cityCode, units });
-      // getOneDayForecast({ dispatch, locationKey: cityCode, units });
+      getOneDayForecast({ dispatch, locationKey: cityCode, units });
     };
     
   }, [forecastType, cityCode, units])
