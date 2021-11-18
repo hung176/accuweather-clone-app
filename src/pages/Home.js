@@ -4,7 +4,7 @@ import { arrImg } from '../assets';
 import { getTopCities } from '../reducers/topCitiesReducer';
 import { useStateValue } from '../reducers';
 import Search from '../components/Search';
-import Nav from '../components/Nav';
+import Nav from '../components/common/Nav';
 import ListHistorySearch from '../components/ListHistorySearch';
 import ListTopCities from '../components/ListTopCities';
 

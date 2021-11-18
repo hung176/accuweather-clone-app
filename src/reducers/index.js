@@ -5,6 +5,8 @@ import autocompleteReducer, { autocompleteInitialState } from './autocompleteRed
 import historyLocationReducer, { historyLocationInitialState } from './historyLocationReducer';
 import currentWeatherReducer, { currentWeatherInitialState } from './currentWeatherReducer';
 import oneDayForecastReducer, { oneDayForecastInitialState } from './oneDayForecastReducer';
+import twelveHourlyReducer, { twelveHourlyInitialState } from './twelveHourlyReducer';
+import fiveDayReducer, { fiveDayInitialState } from './fiveDayReducer';
 import unitsReducer, { unitsInitialState } from './unitsReducers';
 
 const mainReducer = ({
@@ -14,6 +16,8 @@ const mainReducer = ({
   historyLocation,
   currentWeather,
   oneDayForecast,
+  twelveHourly,
+  fiveDay,
   units,
 }, action) => ({
   currentLocation: currentLocationReducer(currentLocation, action),
@@ -22,6 +26,8 @@ const mainReducer = ({
   historyLocation: historyLocationReducer(historyLocation, action),
   currentWeather: currentWeatherReducer(currentWeather, action),
   oneDayForecast: oneDayForecastReducer(oneDayForecast, action),
+  twelveHourly: twelveHourlyReducer(twelveHourly, action),
+  fiveDay: fiveDayReducer(fiveDay, action),
   units: unitsReducer(units, action),
 });
 
@@ -32,6 +38,8 @@ export const mainInitialState = {
   historyLocation: historyLocationInitialState,
   currentWeather: currentWeatherInitialState,
   oneDayForecast: oneDayForecastInitialState,
+  twelveHourly: twelveHourlyInitialState,
+  fiveDay: fiveDayInitialState,
   units: unitsInitialState,
 };
 

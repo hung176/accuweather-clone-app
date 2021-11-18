@@ -52,11 +52,32 @@ export const pickCurrentWeatherData = (data) => {
 export const pickOneDayForecastData = (data) => {
   const dailyForecast = data.DailyForecasts[0];
   const maxUVIndex = dailyForecast.AirAndPollen.find(p => p.Name === 'UVIndex');
+  const findParams = (name) => dailyForecast.AirAndPollen.find(param => param.Name === name).Category;
+  const allergy = {
+    grass: {
+      category: findParams('Grass'),
+      icon: `https://www.accuweather.com/images/lifestyle/grass-pollen.svg`
+    },
+    mold: {
+      category: findParams('Mold'),
+      icon: 'https://www.accuweather.com/images/lifestyle/mold.svg',
+    },
+    ragweed: {
+      category: findParams('Ragweed'),
+      icon: 'https://www.accuweather.com/images/lifestyle/ragweed-pollen.svg',
+    },
+    tree: {
+      category: findParams('Tree'),
+      icon: 'https://www.accuweather.com/images/lifestyle/tree-pollen.svg'
+    },
+    
+  };
   return {
     sunRise: moment(dailyForecast.Sun.EpochRise * 1000).format('LT'),
     sunSet: moment(dailyForecast.Sun.EpochSet * 1000).format('LT'),
-    moonRise: moment(dailyForecast.Moon.EpochSet * 1000).format('LT'),
+    moonRise: moment(dailyForecast.Moon.EpochRise * 1000).format('LT'),
     moonSet: moment(dailyForecast.Moon.EpochSet * 1000).format('LT'),
+    allergy,
     dayForecast: {
       time: moment(dailyForecast.EpochDate * 1000).format('MM/DD'),
       maxUVIndex: `${maxUVIndex.Value} ${maxUVIndex.Category}`,
@@ -87,4 +108,73 @@ export const pickOneDayForecastData = (data) => {
       cloudCover: `${dailyForecast.Night.CloudCover}%`,
     },
   };
+};
+
+export const pickTwelveHourlyData = (data) => {
+  const res = data.map(d => ({
+    time: moment(d.EpochDateTime * 1000).format("hh A"),
+    date: moment(d.EpochDateTime * 1000).format('MM/DD'),
+    weatherIcon: `${iconUrl}/${d.WeatherIcon}.svg`,
+    weatherText: d.IconPhrase,
+    temperature: `${d.Temperature.Value.toFixed()}°`,
+    realFeel: `${d.RealFeelTemperature.Value.toFixed()}°`,
+    realFeelShade: `${d.RealFeelTemperatureShade.Value.toFixed()}°`,
+    dewPoint: `${d.DewPoint.Value.toFixed()}°${d.DewPoint.Unit}`,
+    wind: `${d.Wind.Direction.Localized} ${d.Wind.Speed.Value.toFixed()} ${d.Wind.Speed.Unit}`,
+    windGust: `${d.WindGust.Speed.Value.toFixed()} ${d.WindGust.Speed.Unit}`,
+    humidity: `${d.RelativeHumidity}%`,
+    indoorHumidity: `${d.IndoorRelativeHumidity}%`,
+    visibility: `${d.Visibility.Value.toFixed()} ${d.Visibility.Unit}`,
+    cloudCeiling: `${d.Ceiling.Value} ${d.Ceiling.Unit}`,
+    maxUVIndex: `${d.UVIndex} ${d.UVIndexText}`,
+    thunderProbability: `${d.ThunderstormProbability}%`,
+    rainProbability: `${d.RainProbability}%`,
+    cloudCover: `${d.CloudCover}%`,
+  }));
+
+  return res;
+};
+
+export const pickFiveDayData = (data) => {
+  const res = data.DailyForecasts.map(d => ({
+    timeDay: moment(d.EpochDate * 1000).format("ddd"),
+    date: moment(d.EpochDate * 1000).format('MM/DD'),
+    sunRise: moment(d.Sun.EpochRise * 1000).format('LT'),
+    sunSet: moment(d.Sun.EpochSet * 1000).format('LT'),
+    moonRise: moment(d.Moon.EpochRise * 1000).format('LT'),
+    moonSet: moment(d.Moon.EpochSet * 1000).format('LT'),
+
+    dayForecast: {
+      time: moment(d.EpochDate * 1000).format('MM/DD'),
+      maxUVIndex: `${d.AirAndPollen.find(p => p.Name === 'UVIndex').Value} ${d.AirAndPollen.find(p => p.Name === 'UVIndex').Category}`,
+      weatherIcon: `${iconUrl}/${d.Day.Icon}.svg`,
+      weatherText: d.Day.ShortPhrase,
+      realFeel: `${d.RealFeelTemperature.Maximum.Value.toFixed()}°`,
+      realFeelShade: `${d.RealFeelTemperatureShade.Maximum.Value.toFixed()}°`,
+      temperature: `${d.Temperature.Maximum.Value.toFixed()}°`,
+      thunderProbability: `${d.Day.ThunderstormProbability}%`,
+      rainProbability: `${d.Day.RainProbability}%`,
+      wind: `${d.Day.Wind.Direction.Localized} ${d.Day.Wind.Speed.Value.toFixed()} ${d.Day.Wind.Speed.Unit}`,
+      windGust: `${d.Day.WindGust.Direction.Localized} ${d.Day.WindGust.Speed.Value.toFixed()} ${d.Day.WindGust.Speed.Unit}`,
+      precipitation: `${d.Day.TotalLiquid.Value} ${d.Day.TotalLiquid.Unit}`,
+      cloudCover: `${d.Day.CloudCover}%`,
+    },
+
+    nightForecast: {
+      time: moment(d.EpochDate * 1000).format('MM/DD'),
+      weatherIcon: `${iconUrl}/${d.Night.Icon}.svg`,
+      weatherText: d.Night.ShortPhrase,
+      realFeel: `${d.RealFeelTemperature.Minimum.Value.toFixed()}°`,
+      realFeelShade: `${d.RealFeelTemperatureShade.Minimum.Value.toFixed()}°`,
+      temperature: `${d.Temperature.Minimum.Value.toFixed()}°`,
+      thunderProbability: `${d.Night.ThunderstormProbability}%`,
+      rainProbability: `${d.Night.RainProbability}%`,
+      wind: `${d.Night.Wind.Direction.Localized} ${d.Night.Wind.Speed.Value.toFixed()} ${d.Night.Wind.Speed.Unit}`,
+      windGust: `${d.Night.WindGust.Direction.Localized} ${d.Night.WindGust.Speed.Value.toFixed()} ${d.Night.WindGust.Speed.Unit}`,
+      precipitation: `${d.Night.TotalLiquid.Value} ${d.Night.TotalLiquid.Unit}`,
+      cloudCover: `${d.Night.CloudCover}%`,
+    },
+  }));
+
+  return res;
 };

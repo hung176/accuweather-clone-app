@@ -1,11 +1,11 @@
 import React from 'react';
-import Card from './Card';
-import SunMoon from './SunMoon';
+import Card from '../common/Card';
+import SunMoon from '../common/SunMoon';
 import {
   currentParamsIndex,
   dayParamsIndex,
   nightParamsIndex,
-} from '../consts/weatherParamsIndex';
+} from '../../consts/weatherParamsIndex';
 
 const CurrentWeatherPage = ({ currentWeather, oneDayForecast }) => {
   const { loading: currentLoading, error: currentError, conditions: currentConditions } = currentWeather;

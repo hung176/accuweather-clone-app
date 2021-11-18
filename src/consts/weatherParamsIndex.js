@@ -30,3 +30,22 @@ export const nightParamsIndex = {
   cloudCover: 'Cloud Cover',
 };
 
+export const twelveHourlyParamsIndex = {
+  maxUVIndex: 'Max UV Index',
+  wind: 'Wind',
+  windGust: 'Wind Gusts',
+  humidity: 'Humidity',
+  indoorHumidity: 'Indoor Humidity',
+  dewPoint: 'Dew Point',
+  cloudCover: 'Cloud Cover',
+  visibility: 'Visibility',
+  cloudCeiling: 'Cloud Ceiling',
+};
+
+export const allergyIndex = {
+  grass: 'Grass Pollen',
+  mold: 'Mold',
+  ragweed: 'Ragweed Pollen',
+  tree: 'Tree Pollen',
+};
+

@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import mainReducer, { mainInitialState, StateProvider } from './reducers';
-
+ 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SunIcon, MenuAlt3Icon } from '@heroicons/react/solid';
-import Search from './Search';
+import countries from 'i18n-iso-countries';
+import { capitalizeFirstLetter } from '../../ultils/capitalizeFirstLetter';
 
-const Nav = ({ locationName, pos }) => {
+const Nav = ({ locationName, pos, navInfor }) => {
+  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
   const navigate = useNavigate();
 
   const [moveScroll, setMoveScroll] = useState(false);
@@ -34,6 +36,12 @@ const Nav = ({ locationName, pos }) => {
           <div className="ml-1 text-2xl text-white font-bold">
             {locationName ? locationName : 'AccuWeather'}
           </div>
+          {isForecastPage && (
+            <div className="flex items-center text-white ml-4">
+              <span>{`${capitalizeFirstLetter(navInfor.city)}, ${countries.getName(navInfor.country, "en")} ${navInfor.temperature}`}</span>
+              <img className="w-6 h-6 ml-3" src={navInfor.weatherIcon} alt="icon-nav" />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-between items-center">

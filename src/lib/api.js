@@ -15,8 +15,8 @@ export const getCurrentWeatherApi = (locationKey, lang = "en-us") => axios.get(`
 
 export const getOneDayForecastApi = (locationKey, isMetric, lang = "en-us") => axios.get(`/forecasts/v1/daily/1day/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
 
-export const getDailyFiveWeatherApi = (locationKey, lang, isMetric) => axios.get(`/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
+export const getFiveDayWeatherApi = (locationKey, isMetric, lang = "en-us") => axios.get(`/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
 
 export const getHourlyOneWeatherApi = (locationKey, lang, isMetric) => axios.get(`/forecasts/v1/hourly/1hour/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
 
-export const getHourlyTwelveWeatherApi = (locationKey, lang, isMetric) => axios.get(`/forecasts/v1/hourly/12hour/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
+export const getHourlyTwelveWeatherApi = (locationKey, isMetric, lang = "en-us") => axios.get(`/forecasts/v1/hourly/12hour/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
