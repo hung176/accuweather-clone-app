@@ -178,3 +178,17 @@ export const pickFiveDayData = (data) => {
 
   return res;
 };
+
+export const pickTopCitiesData = (data) => {
+  return data.map((d) => ({
+    locationKey: d.Key,
+    cityName: d.LocalizedName,
+    country: { id: d.Country.ID, name: d.Country.LocalizedName },
+    temperature: {
+      metric: `${d.Temperature.Metric.Value.toFixed()}°${d.Temperature.Metric.Unit}`,
+      imperial: `${d.Temperature.Imperial.Value.toFixed()}°${d.Temperature.Imperial.Unit}`,
+    },
+    weatherText: d.WeatherText,
+    weatherIcon: `${iconUrl}/${d.WeatherIcon}.svg`,
+  }));
+};

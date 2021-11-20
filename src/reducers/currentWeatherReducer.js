@@ -47,33 +47,6 @@ export const getCurrentWeather = async ({ dispatch, locationKey, units }) => {
   }
 };
 
-// export const getDailyFiveWeather = async ({ dispatch, locationKey }) => {
-//   const { data } = await getDailyFiveWeatherApi(locationKey);
-
-//   dispatch({
-//     type: GET_FIVE_DAILY_WEATHER,
-//     payload: data
-//   });
-// };
-
-// export const getHourlyOneWeather = async ({ dispatch, locationKey }) => {
-//   const { data } = await getHourlyOneWeatherApi(locationKey);
-
-//   dispatch({
-//     type: GET_ONE_HOURLY_WEATHER,
-//     payload: data
-//   });
-// };
-
-// export const getHourlyTwelveWeather = async ({ dispatch, locationKey }) => {
-//   const { data } = await getHourlyTwelveWeatherApi(locationKey);
-
-//   dispatch({
-//     type: GET_TWELVE_HOURLY_WEATHER,
-//     payload: data
-//   });
-// };
-
 // reducer
 export default function currentWeatherReducer(state, action) {
   switch (action.type) {

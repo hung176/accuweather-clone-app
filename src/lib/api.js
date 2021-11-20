@@ -1,11 +1,12 @@
 import axios from './axios';
-import { apiKey1, apiKey2, apiKey3 } from '../consts/api';
+import { apiKey1, apiKey2, apiKey3, apiKey4 } from '../consts/api';
 import { random } from '../ultils/random';
-import { pickCurrentWeatherData } from '../ultils/pickData';
 
-const apiKey = random([apiKey1, apiKey2, apiKey3]);
+const apiKey = random([apiKey1, apiKey2, apiKey3, apiKey4]);
 
 export const getCurrentLocationApi = (latitude, longtitude) => axios.get(`/locations/v1/cities/geoposition/search?apikey=${apiKey}&q=${latitude},${longtitude}`);
+
+export const getLocationByKeyApi = (locationKey) => axios.get(`/locations/v1/${locationKey}?apikey=${apiKey4}`);
 
 export const getTopCitiesApi = (quantity) => axios.get(`/currentconditions/v1/topcities/${quantity}?apikey=${apiKey}`);
 
@@ -20,3 +21,13 @@ export const getFiveDayWeatherApi = (locationKey, isMetric, lang = "en-us") => a
 export const getHourlyOneWeatherApi = (locationKey, lang, isMetric) => axios.get(`/forecasts/v1/hourly/1hour/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
 
 export const getHourlyTwelveWeatherApi = (locationKey, isMetric, lang = "en-us") => axios.get(`/forecasts/v1/hourly/12hour/${locationKey}?apikey=${apiKey}&language=${lang}&details=true&metric=${isMetric}`);
+
+export const getLocationByIpApi = (ipAddress) => axios.get(`/locations/v1/cities/ipaddress?apikey=${apiKey4}&q=${ipAddress}`);
+
+export const getIpAddressApi = async () => {
+  const response = await fetch('https://api.ipify.org/?format=json');
+  const { ip } = await response.json();
+  return ip;
+};
+
+export const getNeighborCitiesApi = (locationKey, lang = "en-us") => axios.get(`/locations/v1/cities/neighbors/${locationKey}?apikey=${apiKey4}`);

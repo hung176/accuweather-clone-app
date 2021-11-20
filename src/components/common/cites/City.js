@@ -1,17 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStateValue } from '../reducers';
-import { addToHistoryLocation } from '../reducers/historyLocationReducer';
-import { removeSpaces } from '../ultils/removeSpaces';
+import { removeSpaces } from '../../../ultils/removeSpaces';
 
-const TopCity = ({ city }) => {
+const City = ({ city }) => {
   const navigate = useNavigate();
-  const [, dispatch] = useStateValue();
 
   const goToWeatherCity = (city) => {
     const { country, cityName, locationKey } = city;
     navigate(`/en/${removeSpaces(country.id)}/${removeSpaces(cityName)}/current/${locationKey}`);
-    addToHistoryLocation({ dispatch, location: city });
   };
   return (
     <div
@@ -21,10 +17,10 @@ const TopCity = ({ city }) => {
       <div>{city.cityName}</div>
       <div className="w-1/3 flex items-center justify-between">
         <img className="w-8 h-8" src={city.weatherIcon} alt={city.weatherText} />
-        <span>{`${city.temperature.Metric.Value}°`}</span>
+        <span>{city.temperature}</span>
       </div>
     </div>
   );
 };
 
-export default TopCity;
+export default City;

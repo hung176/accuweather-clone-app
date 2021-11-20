@@ -6,7 +6,7 @@ const HistoryLocation = ({ location }) => {
       <span className="mr-6">{`${location.cityName}, ${location.country.name}`}</span>
       <div className="flex justify-end items-center w-20">
         <img className="w-6 h-6 mr-2" src={location.weatherIcon} />
-        <span>{`${location.temperature.Metric.Value}°${location.temperature.Metric.Unit}`}</span>
+        <span>{location.temperature}</span>
       </div>
     </div>
   );

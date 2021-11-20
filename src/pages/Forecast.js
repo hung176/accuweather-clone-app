@@ -25,15 +25,20 @@ const Forecast = () => {
   const navigate = useNavigate();
   const { country, city, forecastType, cityCode } = useParams();
 
+  const isCurrent = forecastType === 'current';
+  const isToday = forecastType === 'today';
+  const isHourly = forecastType === 'hourly';
+  const isDaily = forecastType === 'daily';
+
   useEffect(() => {
     getCurrentWeather({ dispatch, locationKey: cityCode, units });
-    if (forecastType === 'today') {
+    if (isCurrent || isToday) {
       getOneDayForecast({ dispatch, locationKey: cityCode, units });
     };
-    if (forecastType === 'hourly') {
+    if (isHourly) {
       getTwelveHourly({ dispatch, locationKey: cityCode, units });
     };
-    if (forecastType === 'daily') {
+    if (isDaily) {
       getFiveDay({  dispatch, locationKey: cityCode, units });
     }
     
@@ -42,11 +47,6 @@ const Forecast = () => {
   const handleNavigate = (type) => {
     navigate(`/en/${country}/${city}/${type}/${cityCode}`);
   };
-
-  const isCurrent = forecastType === 'current';
-  const isToday = forecastType === 'today';
-  const isHourly = forecastType === 'hourly';
-  const isDaily = forecastType === 'daily';
 
   const handleNavigateToCurrent = () => {
     navigate(`/en/${country}/${city}/current/${cityCode}`);
@@ -58,7 +58,6 @@ const Forecast = () => {
     country,
     city,
   };
-  console.log(navInfor)
 
   return (
     <div>

@@ -4,8 +4,9 @@ import { SunIcon, MenuAlt3Icon } from '@heroicons/react/solid';
 import countries from 'i18n-iso-countries';
 import { capitalizeFirstLetter } from '../../ultils/capitalizeFirstLetter';
 
+countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+
 const Nav = ({ locationName, pos, navInfor }) => {
-  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
   const navigate = useNavigate();
 
   const [moveScroll, setMoveScroll] = useState(false);
