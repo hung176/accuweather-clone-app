@@ -7,8 +7,8 @@ function App() {
   return (
     <div>
       <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/en/:country/:city/:forecastType/:cityCode" element={<Forecast />} />
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/en/:country/:city/:forecastType/:cityCode" element={<Forecast />} />
       </Routes>
     </div>
   );

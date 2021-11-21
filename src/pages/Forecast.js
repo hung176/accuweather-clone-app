@@ -19,8 +19,8 @@ const Forecast = () => {
     currentWeather,
     oneDayForecast,
     twelveHourly,
+    units,
     fiveDay,
-    units
   }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const { country, city, forecastType, cityCode } = useParams();
@@ -31,15 +31,15 @@ const Forecast = () => {
   const isDaily = forecastType === 'daily';
 
   useEffect(() => {
-    getCurrentWeather({ dispatch, locationKey: cityCode, units });
+    getCurrentWeather({ dispatch, locationKey: cityCode });
     if (isCurrent || isToday) {
-      getOneDayForecast({ dispatch, locationKey: cityCode, units });
+      getOneDayForecast({ dispatch, locationKey: cityCode });
     };
     if (isHourly) {
-      getTwelveHourly({ dispatch, locationKey: cityCode, units });
+      getTwelveHourly({ dispatch, locationKey: cityCode });
     };
     if (isDaily) {
-      getFiveDay({  dispatch, locationKey: cityCode, units });
+      getFiveDay({  dispatch, locationKey: cityCode });
     }
     
   }, [forecastType, cityCode, units])
@@ -89,10 +89,13 @@ const Forecast = () => {
 
       </div>
 
-      <select onChange={(e) => {
-        const { target: { value } } = e;
-        changeUnits({ dispatch, units: value })
-      }}>
+      <select
+        value={units}
+        onChange={(e) => {
+          const { target: { value } } = e;
+          changeUnits({ dispatch, units: value })
+        }}
+      >
         <option value="metric">metric</option>
         <option value="imperial">imperatial</option>
       </select>

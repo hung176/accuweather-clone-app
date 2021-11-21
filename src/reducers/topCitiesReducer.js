@@ -11,7 +11,9 @@ export const topCitiesInitialState = {
   error: '',
 };
 
-export const getTopCities = async ({ quantity, dispatch, units }) => {
+export const getTopCities = async ({ quantity, dispatch }) => {
+  const units = window.localStorage.getItem('units') || 'metric';
+
   try {
     dispatch({
       type: FETCHING_CITIES,

@@ -10,7 +10,9 @@ export const twelveHourlyInitialState = {
   conditions: []
 };
 
-export const getTwelveHourly = async ({ dispatch, locationKey, units }) => {
+export const getTwelveHourly = async ({ dispatch, locationKey }) => {
+  const units = window.localStorage.getItem('units') || 'metric';
+
   const isMetric = units === 'metric';
   try {
     const { data } = await getHourlyTwelveWeatherApi(locationKey, isMetric);

@@ -10,7 +10,9 @@ export const oneDayForecastInitialState = {
   conditions: {}
 };
 
-export const getOneDayForecast = async ({ dispatch, locationKey, units }) => {
+export const getOneDayForecast = async ({ dispatch, locationKey }) => {
+  const units = window.localStorage.getItem('units') || 'metric';
+
   const isMetric = units === 'metric';
   const { data } = await getOneDayForecastApi(locationKey, isMetric);
 

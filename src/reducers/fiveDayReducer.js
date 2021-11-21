@@ -10,7 +10,9 @@ export const fiveDayInitialState = {
   conditions: []
 };
 
-export const getFiveDay = async ({ dispatch, locationKey, units }) => {
+export const getFiveDay = async ({ dispatch, locationKey }) => {
+  const units = window.localStorage.getItem('units') || 'metric';
+
   const isMetric = units === 'metric';
   try {
     const { data } = await getFiveDayWeatherApi(locationKey, isMetric);
