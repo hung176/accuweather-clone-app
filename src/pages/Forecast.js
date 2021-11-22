@@ -13,6 +13,8 @@ import { changeUnits } from '../reducers/unitsReducers';
 import { useStateValue } from '../reducers';
 import { getFiveDay } from '../reducers/fiveDayReducer';
 import Allergy from '../components/allergy/Allergy';
+import { getLocationByKeyApi } from '../lib/api';
+import { removeSpaces } from '../ultils/removeSpaces';
 
 const Forecast = () => {
   const [{
@@ -24,6 +26,20 @@ const Forecast = () => {
   }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const { country, city, forecastType, cityCode } = useParams();
+
+  useEffect(() => {
+    const findCorrectLocation = async () => {
+      const { data } = await getLocationByKeyApi(cityCode);
+      const correctCountryId = removeSpaces(data.Country.ID);
+      const correctCity = removeSpaces(data.LocalizedName);
+
+      if (country !== correctCountryId || city !== correctCity) {
+        navigate(`/en/${correctCountryId}/${correctCity}/${forecastType}/${cityCode}`);
+      }
+    };
+
+    findCorrectLocation();
+  }, []);
 
   const isCurrent = forecastType === 'current';
   const isToday = forecastType === 'today';
