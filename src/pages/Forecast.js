@@ -78,7 +78,7 @@ const Forecast = () => {
   return (
     <div>
       <Nav navInfor={navInfor} />
-      <div className="w-full mx-auto sm:w-4/5 flex flex-col items-start">
+      <div className="w-full mx-auto sm:w-3/4 flex flex-col items-start">
         <ListForecastBy forecastType={forecastType} onNavigate={handleNavigate} />
         <div className="my-10 w-full sm:w-4/5 sm:max-w-2xl">
           {isCurrent && (

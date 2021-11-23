@@ -3,7 +3,7 @@ import { random } from '../ultils/random';
 import { arrImg } from '../assets';
 import { getTopCities } from '../reducers/topCitiesReducer';
 import { useStateValue } from '../reducers';
-import Search from '../components/Search';
+import Search from '../components/search/Search';
 import Nav from '../components/common/Nav';
 import ListHistorySearch from '../components/ListHistorySearch';
 import ListOfCities from '../components/common/cites/ListOfCities';
@@ -74,8 +74,10 @@ const Home = () => {
         style={{ backgroundImage: `url(${backgroundImg})`}}
       >
         <Nav pos="fixed" />
-        <div className="mt-12 pt-2">
-          <Search />
+        <div className="mt-12 w-full flex justify-center items-center">
+          <div className="w-3/4 sm:w-3/5">
+            <Search />
+          </div>
         </div>
 
 
