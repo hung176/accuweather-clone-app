@@ -29,7 +29,6 @@ export const useLocalStorage = (key, initialValue) => {
   const setValue = value => {
     try {
       const newValue = composeArray(storedValue, value);
-      console.log('newValue', newValue)
       const valueToStore = value instanceof Function ? value(storedValue) : newValue;
       setStoredValue(valueToStore);
       window.localStorage.setItem(key, JSON.stringify(valueToStore));

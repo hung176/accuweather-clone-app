@@ -6,6 +6,7 @@ import currentWeatherReducer, { currentWeatherInitialState } from './currentWeat
 import oneDayForecastReducer, { oneDayForecastInitialState } from './oneDayForecastReducer';
 import twelveHourlyReducer, { twelveHourlyInitialState } from './twelveHourlyReducer';
 import fiveDayReducer, { fiveDayInitialState } from './fiveDayReducer';
+import historyWeatherReducer, { historyWeatherInitialState } from './historyWeatherReducer';
 import unitsReducer, { unitsInitialState } from './unitsReducers';
 
 const mainReducer = ({
@@ -16,6 +17,7 @@ const mainReducer = ({
   oneDayForecast,
   twelveHourly,
   fiveDay,
+  historyWeather,
   units,
 }, action) => ({
   currentLocation: currentLocationReducer(currentLocation, action),
@@ -25,6 +27,7 @@ const mainReducer = ({
   oneDayForecast: oneDayForecastReducer(oneDayForecast, action),
   twelveHourly: twelveHourlyReducer(twelveHourly, action),
   fiveDay: fiveDayReducer(fiveDay, action),
+  historyWeather: historyWeatherReducer(historyWeather, action),
   units: unitsReducer(units, action),
 });
 
@@ -36,6 +39,7 @@ export const mainInitialState = {
   oneDayForecast: oneDayForecastInitialState,
   twelveHourly: twelveHourlyInitialState,
   fiveDay: fiveDayInitialState,
+  historyWeather: historyWeatherInitialState,
   units: unitsInitialState,
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SunIcon, MenuAlt3Icon } from '@heroicons/react/solid';
 import countries from 'i18n-iso-countries';
 import { capitalizeFirstLetter } from '../../ultils/capitalizeFirstLetter';
@@ -7,7 +7,7 @@ import Search from '../search/Search';
 
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
-const Nav = ({ locationName, pos, navInfor }) => {
+const Nav = ({ pos, navInfor }) => {
   const navigate = useNavigate();
 
   const [moveScroll, setMoveScroll] = useState(false);
@@ -22,14 +22,15 @@ const Nav = ({ locationName, pos, navInfor }) => {
   window.addEventListener('scroll', changeBackground);
 
   const { pathname } = useLocation();
+  const { forecastType } = useParams();
   const isShowBackground = moveScroll || pathname !== '/';
-  const isForecastPage = pathname !== '/';
+  const isForecastPage = ['current', 'today', 'hourly', 'daily', 'airquality'].includes(forecastType);
 
   return (
     <div className={`w-full ${isShowBackground ? `bg-accu ${pos} top-0 z-50` : 'bg-transparent'} flex justify-center`}>
       <div className="w-full sm:w-4/5 p-4 flex justify-between items-center">
         <div
-          className="flex flex-1 items-center cursor-pointe"
+          className="flex flex-1 items-center cursor-pointer"
           onClick={() => navigate('/')}
         >
           <div>

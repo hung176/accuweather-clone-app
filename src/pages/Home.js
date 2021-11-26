@@ -18,6 +18,7 @@ import {
   getLocationByKeyApi,
 } from '../lib/api';
 import { iconUrl } from '../consts/api';
+import { getHistoryWeather } from '../reducers/historyWeatherReducer';
 
 const Home = () => {
   const [{ topCities: { loading, error, cities }, units }, dispatch] = useStateValue();
@@ -40,6 +41,8 @@ const Home = () => {
       if (locationKeyStorage.length === 0) {
         setLocationKeyStorage(locationByIp.Key);
       };
+
+      getHistoryWeather({ dispatch });
 
       // const { data } = await getNeighborCitiesApi(locationByIp.Key);
       // const locationKeys = data.map(d => d.Key);
@@ -75,14 +78,16 @@ const Home = () => {
       >
         <Nav pos="fixed" />
         <div className="mt-12 w-full flex justify-center items-center">
-          <div className="w-3/4 sm:w-3/5">
+          <div className="w-3/4">
             <Search />
           </div>
         </div>
 
 
-        <div className="pb-20 pt-4">
-          <ListHistorySearch locationKeyStorage={locationKeyStorage} />
+        <div className="w-full mt-4 mb-10 flex justify-center items-center">
+          <div className="w-3/4">
+            <ListHistorySearch />
+          </div>
         </div>
       </div>
 

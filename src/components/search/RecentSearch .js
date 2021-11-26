@@ -9,8 +9,8 @@ const RecentSearch = ({ cityName, countryName, weatherIcon, temperature }) => {
       </div>
 
       <div className="w-1/3 flex justify-between items-center">
-        {weatherIcon && <img className="w-8 h-8" src={weatherIcon} alt="icon" />}
-        <span className="font-semibold text-2xl">{temperature}</span>
+        {weatherIcon && <img className="w-7 h-7 mr-2" src={weatherIcon} alt="icon" />}
+        <span className="font-semibold text-xl">{temperature}</span>
       </div>
     </div>
   );

@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useStateValue } from '../reducers';
+import { useNavigate } from 'react-router-dom';
+import { removeSpaces } from '../ultils/removeSpaces';
 import HistoryLocation from './HistoryLocation';
-import { pickCurrentWeatherData } from '../ultils/pickData';
-import { getCurrentWeatherApi, getLocationByKeyApi } from '../lib/api';
 
-const ListHistoryLocations = ({ locationKeyStorage }) => {
-  const [{ units }, dispatch] = useStateValue();
-  const [historyLocationWeather, setHistoryLocationWeather] = useState([]);
+const ListHistoryLocations = () => {
+  const [{ historyWeather }, dispatch] = useStateValue();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const getHistoryLocationWeather = async () => {
-      const historyLocations = await Promise.all(locationKeyStorage.map(async(locationKey) => {
-        const { data: locationInfo } = await getLocationByKeyApi(locationKey);
-        const { data: weatherInfo } = await getCurrentWeatherApi(locationKey);
-
-        return {
-          locationKey,
-          cityName: locationInfo.LocalizedName,
-          country: { id: locationInfo.Country.ID, name: locationInfo.Country.LocalizedName },
-          temperature: pickCurrentWeatherData(weatherInfo).temperature[units],
-          weatherText: pickCurrentWeatherData(weatherInfo).weatherText,
-          weatherIcon: pickCurrentWeatherData(weatherInfo).weatherIcon,
-        };
-      }));
-
-      setHistoryLocationWeather(historyLocations);
-    };
-
-    getHistoryLocationWeather();
-  }, []);
+  const handleNavigate = (location) => {
+    const { cityName, country, locationKey } = location;
+    navigate(`/en/${removeSpaces(country.id)}/${removeSpaces(cityName)}/current/${locationKey}`);
+  };
 
   return (
-    <div className="mx-auto py-2 max-w-4xl w-3/4 flex flex-col justify-center md:flex-row md:justify-between md:flex-wrap">
-      {historyLocationWeather.map(location => (
-        <HistoryLocation key={location.locationKey} location={location} />
+    <div className="mx-auto py-2 flex flex-col justify-center md:flex-row md:justify-between md:flex-wrap">
+      {historyWeather.map(location => (
+        <div
+          key={location.locationKey}
+          onClick={() => handleNavigate(location)}
+        >
+          <HistoryLocation location={location} />
+        </div>
       ))}
     </div>
   );

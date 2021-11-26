@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash.debounce';
 import { getCurrentLocation } from '../../reducers/currentLocationReducer';
 import { getAutocompleteSearch } from '../../reducers/autocompleteReducer';
 import { REMOVE_AUTOCOMPLETE_SEARCH } from '../../reducers/autocompleteReducer';
@@ -8,6 +9,7 @@ import { SearchIcon, XIcon } from '@heroicons/react/outline';
 import { LocationMarkerIcon } from '@heroicons/react/solid';
 import AutoComplete from './AutoComplete';
 import RecentSearch from './RecentSearch ';
+import { removeSpaces } from '../../ultils/removeSpaces';
 
 const Search = ({ small, isForecastPage }) => {
   const [border, setBorder] = React.useState('rounded-md');
@@ -15,7 +17,7 @@ const Search = ({ small, isForecastPage }) => {
   const [query, setQuery] = React.useState('');
   const navigate = useNavigate();
 
-  const [, dispatch] = useStateValue();
+  const [{ historyWeather }, dispatch] = useStateValue();
 
   const onFocus = (e) => {
     setBorder('rounded-t-md border-b-2 border-red-400');
@@ -30,17 +32,19 @@ const Search = ({ small, isForecastPage }) => {
     getCurrentLocation({ dispatch, navigate });
   };
 
+  const debounceAutocomplete = useCallback(
+    debounce((newValue) => getAutocompleteSearch({query: newValue, dispatch}), 1000),
+    []
+);
+
   const handleChange = (e) => {
     setQuery(e.target.value);
-    // getAutocompleteSearch({query: e.target.value, dispatch});
+    debounceAutocomplete(e.target.value);
   };
 
   const goToCitySearched = (location) => {
     const { countryId, localizedName, locationKey } = location;
-
-
-      navigate(-1);
-    
+      navigate(`/en/${removeSpaces(countryId)}/${removeSpaces(localizedName)}/current/${locationKey}`);
   };
 
   return (
@@ -81,21 +85,36 @@ const Search = ({ small, isForecastPage }) => {
             <span className={`font-light`}>Use your current location</span>
           </div>
           
-          <AutoComplete
-            goToCitySearched={goToCitySearched}
-          />
+          {query && (
+            <AutoComplete goToCitySearched={goToCitySearched} />
+          )}
 
           {!query && isForecastPage && (
             <div className="w-full">
-              <div className="px-4 font-semibold text-lg">Recent</div>
+              <div className="px-2 font-semibold text-lg">Recent</div>
 
-              <div className="p-4 border-t-2 border-gray-200">
-                <RecentSearch
-                  cityName='Hanoi'
-                  countryName="Vietnam"
-                  weatherIcon='https://www.accuweather.com/images/weathericons/06.svg'
-                  temperature='29'
-                />
+              <div className="border-t-2 border-gray-200">
+                {historyWeather.map(recentLocation => {
+                  const { locationKey, cityName, country, weatherIcon, temperature } = recentLocation;
+                  return (
+                    <div
+                      className="mt-2 p-2 hover:bg-gray-300 cursor-pointer"
+                      key={locationKey}
+                      onMouseDown={() => goToCitySearched({
+                        locationKey,
+                        localizedName: cityName,
+                        countryId: country.id
+                      })}
+                    >
+                      <RecentSearch
+                        cityName={cityName}
+                        countryName={country.name}
+                        weatherIcon={weatherIcon}
+                        temperature={temperature}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

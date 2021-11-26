@@ -11,6 +11,7 @@
     "axios": "^0.24.0",
     "framer-motion": "^5.3.0",
     "i18n-iso-countries": "^7.0.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
     "moment": "^2.29.1",

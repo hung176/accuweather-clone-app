@@ -9,6 +9,7 @@ import FiveDaytWeather from '../components/fiveDay/FiveDaytWeather';
 import { getCurrentWeather } from '../reducers/currentWeatherReducer';
 import { getOneDayForecast } from '../reducers/oneDayForecastReducer';
 import { getTwelveHourly } from '../reducers/twelveHourlyReducer';
+import { getHistoryWeather } from '../reducers/historyWeatherReducer';
 import { changeUnits } from '../reducers/unitsReducers';
 import { useStateValue } from '../reducers';
 import { getFiveDay } from '../reducers/fiveDayReducer';
@@ -59,6 +60,10 @@ const Forecast = () => {
     }
     
   }, [forecastType, cityCode, units])
+
+  useEffect(() => {
+    getHistoryWeather({ dispatch });
+  }, [units]);
 
   const handleNavigate = (type) => {
     navigate(`/en/${country}/${city}/${type}/${cityCode}`);
