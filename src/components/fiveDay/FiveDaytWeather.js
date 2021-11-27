@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import HeaderCard from '../common/HeaderCard';
 import Card from '../common/Card';
 import SunMoon from '../common/SunMoon';
+import ShowError from '../common/ShowError';
 import { dayParamsIndex, nightParamsIndex } from '../../consts/weatherParamsIndex';
 
 const FiveDaytWeather = ({ fiveDay }) => {
@@ -24,6 +25,11 @@ const FiveDaytWeather = ({ fiveDay }) => {
   const handleAction = (index) => {
     navigate(`${pathname}?day=${index + 1}`)
   };
+
+  if (error) {
+    return (<ShowError error={error} />)
+  }
+
   return (
     <div className="">
       {search && !loading && (

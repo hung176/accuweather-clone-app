@@ -1,10 +1,14 @@
 import React from 'react';
 import AccordionCard from '../common/AccordionCard';
+import ShowError from '../common/ShowError';
 import { twelveHourlyParamsIndex } from '../../consts/weatherParamsIndex';
 
 const TwelveHourlyWeather = ({ twelveHourly }) => {
   const { loading, error, conditions } = twelveHourly;
 
+  if (error) {
+    return (<ShowError error={error} />)
+  }
   return (
     <div className="">
       {conditions.map((tw, i) => (

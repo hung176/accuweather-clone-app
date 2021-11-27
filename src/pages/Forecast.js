@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Nav from '../components/common/Nav';
 import ListForecastBy from '../components/ListForecastBy';
@@ -9,15 +9,15 @@ import FiveDaytWeather from '../components/fiveDay/FiveDaytWeather';
 import { getCurrentWeather } from '../reducers/currentWeatherReducer';
 import { getOneDayForecast } from '../reducers/oneDayForecastReducer';
 import { getTwelveHourly } from '../reducers/twelveHourlyReducer';
-import { getHistoryWeather } from '../reducers/historyWeatherReducer';
-import { changeUnits } from '../reducers/unitsReducers';
 import { useStateValue } from '../reducers';
 import { getFiveDay } from '../reducers/fiveDayReducer';
 import Allergy from '../components/allergy/Allergy';
 import { getLocationByKeyApi } from '../lib/api';
 import { removeSpaces } from '../ultils/removeSpaces';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import ShowError from '../components/common/ShowError';
 
-const Forecast = () => {
+const Forecast = ({ showSideBar }) => {
   const [{
     currentWeather,
     oneDayForecast,
@@ -26,21 +26,9 @@ const Forecast = () => {
     fiveDay,
   }, dispatch] = useStateValue();
   const navigate = useNavigate();
+  const [error, setError] = useState('');
   const { country, city, forecastType, cityCode } = useParams();
-
-  useEffect(() => {
-    const findCorrectLocation = async () => {
-      const { data } = await getLocationByKeyApi(cityCode);
-      const correctCountryId = removeSpaces(data.Country.ID);
-      const correctCity = removeSpaces(data.LocalizedName);
-
-      if (country !== correctCountryId || city !== correctCity) {
-        navigate(`/en/${correctCountryId}/${correctCity}/${forecastType}/${cityCode}`);
-      }
-    };
-
-    findCorrectLocation();
-  }, []);
+  const [, setLocationKeyStore] = useLocalStorage('history', []);
 
   const isCurrent = forecastType === 'current';
   const isToday = forecastType === 'today';
@@ -48,22 +36,38 @@ const Forecast = () => {
   const isDaily = forecastType === 'daily';
 
   useEffect(() => {
-    getCurrentWeather({ dispatch, locationKey: cityCode });
-    if (isCurrent || isToday) {
-      getOneDayForecast({ dispatch, locationKey: cityCode });
-    };
-    if (isHourly) {
-      getTwelveHourly({ dispatch, locationKey: cityCode });
-    };
-    if (isDaily) {
-      getFiveDay({  dispatch, locationKey: cityCode });
-    }
-    
-  }, [forecastType, cityCode, units])
+    const getForecast = async () => {
+      try {
+        setError('');
+        const { data } = await getLocationByKeyApi(cityCode);
+        const correctCountryId = removeSpaces(data.Country.ID);
+        const correctCity = removeSpaces(data.LocalizedName);
 
-  useEffect(() => {
-    getHistoryWeather({ dispatch });
-  }, [units]);
+        setLocationKeyStore(cityCode);
+  
+        if (country !== correctCountryId || city !== correctCity) {
+          navigate(`/en/${correctCountryId}/${correctCity}/${forecastType}/${cityCode}`);
+        }
+
+        getCurrentWeather({ dispatch, locationKey: cityCode });
+        if (isCurrent || isToday) {
+          getOneDayForecast({ dispatch, locationKey: cityCode });
+        };
+        if (isHourly) {
+          getTwelveHourly({ dispatch, locationKey: cityCode });
+        };
+        if (isDaily) {
+          getFiveDay({  dispatch, locationKey: cityCode });
+        }
+        
+      } catch (error) {
+        setError(error.message);
+      }
+     
+    };
+
+    getForecast();
+  }, [forecastType, cityCode, units]);
 
   const handleNavigate = (type) => {
     navigate(`/en/${country}/${city}/${type}/${cityCode}`);
@@ -74,15 +78,24 @@ const Forecast = () => {
   };
 
   const navInfor = {
-    temperature: currentWeather.conditions.temperature,
-    weatherIcon: currentWeather.conditions.weatherIcon,
+    temperature: currentWeather?.conditions?.temperature,
+    weatherIcon: currentWeather?.conditions?.weatherIcon,
     country,
     city,
   };
 
+  if (error) {
+    return (
+      <div>
+        <Nav showSideBar={showSideBar} />
+        <ShowError error={error} />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <Nav navInfor={navInfor} />
+      <Nav navInfor={navInfor} showSideBar={showSideBar} />
       <div className="w-full mx-auto sm:w-3/4 flex flex-col items-start">
         <ListForecastBy forecastType={forecastType} onNavigate={handleNavigate} />
         <div className="my-10 w-full sm:w-4/5 sm:max-w-2xl">
@@ -109,17 +122,6 @@ const Forecast = () => {
         </div>
 
       </div>
-
-      <select
-        value={units}
-        onChange={(e) => {
-          const { target: { value } } = e;
-          changeUnits({ dispatch, units: value })
-        }}
-      >
-        <option value="metric">metric</option>
-        <option value="imperial">imperatial</option>
-      </select>
     </div>
   );
 };

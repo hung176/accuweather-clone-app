@@ -20,7 +20,7 @@ import {
 import { iconUrl } from '../consts/api';
 import { getHistoryWeather } from '../reducers/historyWeatherReducer';
 
-const Home = () => {
+const Home = ({ showSideBar, isShowSideBar }) => {
   const [{ topCities: { loading, error, cities }, units }, dispatch] = useStateValue();
   const [backgroundImg, ] = useState(random(arrImg));
   const [neighborsWeather, setNeighborWeather] = useState([]);
@@ -76,7 +76,7 @@ const Home = () => {
         className="bg-no-repeat bg-cover bg-center border-b-2 border-red-400"
         style={{ backgroundImage: `url(${backgroundImg})`}}
       >
-        <Nav pos="fixed" />
+        <Nav pos="fixed" isShowSideBar={isShowSideBar} showSideBar={showSideBar} />
         <div className="mt-12 w-full flex justify-center items-center">
           <div className="w-3/4">
             <Search />
@@ -85,7 +85,7 @@ const Home = () => {
 
 
         <div className="w-full mt-4 mb-10 flex justify-center items-center">
-          <div className="w-3/4">
+          <div className="w-3/4 md:w-1/2">
             <ListHistorySearch />
           </div>
         </div>
@@ -97,10 +97,10 @@ const Home = () => {
             <Loading />
           </div>
         )}
-        {cities.length && (
+        {!loading && !error && (
           <div className="pb-4 w-full flex flex-col items-center">
             <div className="text-gray-500 w-full sm:w-4/5 font-semibold uppercase mt-10 mb-2">Top Cities Weather Conditions</div>
-            <ListOfCities cities={cities} setLocationKeyStorage={setLocationKeyStorage} />
+            <ListOfCities cities={cities} />
           </div>
         )}
 

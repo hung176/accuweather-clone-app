@@ -4,7 +4,7 @@ import SettingItem from '../components/SettingItem';
 import { changeUnits } from '../reducers/unitsReducers';
 import { useStateValue } from '../reducers';
 
-const Setting = () => {
+const Setting = ({ showSideBar }) => {
   const [, dispatch] = useStateValue();
   const units = window.localStorage.getItem('units') || 'metric';
   const settings = [
@@ -34,7 +34,7 @@ const Setting = () => {
 
   return (
     <div>
-      <Nav />
+      <Nav showSideBar={showSideBar} />
       <div className="w-full mt-8 flex justify-center items-center">
         <div className="w-3/4">
           <div className="w-full sm:w-3/4 p-3 bg-white">

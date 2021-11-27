@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 import { getCurrentLocation } from '../../reducers/currentLocationReducer';
 import { getAutocompleteSearch } from '../../reducers/autocompleteReducer';
@@ -10,6 +10,7 @@ import { LocationMarkerIcon } from '@heroicons/react/solid';
 import AutoComplete from './AutoComplete';
 import RecentSearch from './RecentSearch ';
 import { removeSpaces } from '../../ultils/removeSpaces';
+import { getHistoryWeather } from '../../reducers/historyWeatherReducer';
 
 const Search = ({ small, isForecastPage }) => {
   const [border, setBorder] = React.useState('rounded-md');
@@ -17,7 +18,13 @@ const Search = ({ small, isForecastPage }) => {
   const [query, setQuery] = React.useState('');
   const navigate = useNavigate();
 
+  const { forecastType, cityCode } = useParams();
+
   const [{ historyWeather }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    getHistoryWeather({ dispatch });
+  }, [cityCode]);
 
   const onFocus = (e) => {
     setBorder('rounded-t-md border-b-2 border-red-400');
@@ -44,7 +51,7 @@ const Search = ({ small, isForecastPage }) => {
 
   const goToCitySearched = (location) => {
     const { countryId, localizedName, locationKey } = location;
-      navigate(`/en/${removeSpaces(countryId)}/${removeSpaces(localizedName)}/current/${locationKey}`);
+    navigate(`/en/${removeSpaces(countryId)}/${removeSpaces(localizedName)}/current/${locationKey}`);
   };
 
   return (

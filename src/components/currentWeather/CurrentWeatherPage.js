@@ -6,11 +6,15 @@ import {
   dayParamsIndex,
   nightParamsIndex,
 } from '../../consts/weatherParamsIndex';
+import ShowError from '../common/ShowError';
 
 const CurrentWeatherPage = ({ currentWeather, oneDayForecast }) => {
   const { loading: currentLoading, error: currentError, conditions: currentConditions } = currentWeather;
   const { loading: oneDayLoading, error: oneDayError, conditions: oneDayConditions } = oneDayForecast;
 
+  if (currentError || oneDayError) {
+    return (<ShowError error={currentError} />)
+  }
   return (
     <div>
       <Card

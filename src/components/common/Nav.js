@@ -7,7 +7,8 @@ import Search from '../search/Search';
 
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
-const Nav = ({ pos, navInfor }) => {
+const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
+
   const navigate = useNavigate();
 
   const [moveScroll, setMoveScroll] = useState(false);
@@ -23,37 +24,41 @@ const Nav = ({ pos, navInfor }) => {
 
   const { pathname } = useLocation();
   const { forecastType } = useParams();
-  const isShowBackground = moveScroll || pathname !== '/';
-  const isForecastPage = ['current', 'today', 'hourly', 'daily', 'airquality'].includes(forecastType);
+  const isHomePage = pathname === '/';
+  const isShowBackground = moveScroll || !isHomePage;
+  const isForecastPage = ['current', 'today', 'hourly', 'daily'].includes(forecastType);
 
   return (
-    <div className={`w-full ${isShowBackground ? `bg-accu ${pos} top-0 z-50` : 'bg-transparent'} flex justify-center`}>
+    <div className={`w-full h-20 ${isShowBackground ? `bg-accu ${pos} top-0 z-40` : (`${isShowSideBar ? 'bg-accu sm:bg-transparent' : 'bg-transparent' }`)} flex justify-center`}>
       <div className="w-full sm:w-4/5 p-4 flex justify-between items-center">
         <div
           className="flex flex-1 items-center cursor-pointer"
-          onClick={() => navigate('/')}
+          onClick={() => {
+            showSideBar(false);
+            navigate('/')
+          }}
         >
           <div>
-            <SunIcon className="h-8 w-8 text-red-500"/>
+            <SunIcon className="h-8 w-8 text-red-500" />
           </div>
-          <div className="hidden md:block ml-1 md:text-xl text-white font-bold">
+          <div className={`${isHomePage ? 'block' : 'hidden md:block'} ml-1 md:text-xl text-white font-bold`}>
             AccuWeather
           </div>
-          {isForecastPage && (
+          {isForecastPage && navInfor && (
             <div className="flex items-center text-white ml-4">
-              <span className="truncate">{`${capitalizeFirstLetter(navInfor.city)}, ${countries.getName(navInfor.country, "en")} ${navInfor.temperature}`}</span>
-              <img className="w-6 h-6 ml-1" src={navInfor.weatherIcon} alt="icon-nav" />
+              <span className="truncate">{`${capitalizeFirstLetter(navInfor?.city)}, ${countries.getName(navInfor?.country, "en")} ${navInfor?.temperature ? navInfor?.temperature : ''}`}</span>
+              {navInfor.weatherIcon && <img className="w-6 h-6 ml-1" src={navInfor.weatherIcon} alt="icon-nav" />}
             </div>
           )}
         </div>
 
         <div className="flex sm:w-1/2 justify-end items-center">
           <div className="hidden sm:block sm:w-3/4 mr-3">
-            {isForecastPage && (
+            {!isHomePage && (
               <Search small isForecastPage={pathname !== '/'} />
             )}
           </div>
-          <MenuAlt3Icon className="h-10 w-10 text-white"/>
+          <MenuAlt3Icon className="h-10 w-10 text-white cursor-pointer" onClick={() => showSideBar(true)}/>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import { currentParamsIndex } from '../../consts/weatherParamsIndex';
 import WeatherParam from '../common/WeatherParam';
+import ShowError from '../common/ShowError';
 
 const ToDayWeather = ({ currentWeather, onNavigate }) => {
   const { loading, error, conditions } = currentWeather;
@@ -9,6 +10,11 @@ const ToDayWeather = ({ currentWeather, onNavigate }) => {
     name: currentParamsIndex[p],
     value: conditions[p],
   }));
+
+  if (error) {
+    return (<ShowError error={error} />)
+  }
+
   return (
     <div className="flex flex-col p-3 justify-start items-center bg-white">
       <div className="w-full flex flex-col sm:flex-row sm:justify-between sm:items-start">

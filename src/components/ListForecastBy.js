@@ -2,7 +2,7 @@ import React from 'react';
 import ForecastBy from './ForecastBy';
 
 export default function ListForecastBy({ forecastType, onNavigate }) {
-  const forecastByArr = ['today', 'hourly', 'daily', 'radar', 'monthly'];
+  const forecastByArr = ['today', 'hourly', 'daily'];
 
   return (
     <div className="w-full border-b border-gray-500 flex justify-start">
