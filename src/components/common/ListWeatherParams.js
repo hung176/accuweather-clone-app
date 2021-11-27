@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import WeatherParam from './WeatherParam';
 
 const ListWeatherParams = ({ weatherArr }) => {

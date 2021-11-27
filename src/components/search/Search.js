@@ -18,13 +18,13 @@ const Search = ({ small, isForecastPage }) => {
   const [query, setQuery] = React.useState('');
   const navigate = useNavigate();
 
-  const { forecastType, cityCode } = useParams();
+  const { cityCode } = useParams();
 
   const [{ historyWeather }, dispatch] = useStateValue();
 
   useEffect(() => {
     getHistoryWeather({ dispatch });
-  }, [cityCode]);
+  }, [dispatch, cityCode]);
 
   const onFocus = (e) => {
     setBorder('rounded-t-md border-b-2 border-red-400');

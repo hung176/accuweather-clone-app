@@ -5,7 +5,7 @@ import WeatherParam from '../common/WeatherParam';
 import ShowError from '../common/ShowError';
 
 const ToDayWeather = ({ currentWeather, onNavigate }) => {
-  const { loading, error, conditions } = currentWeather;
+  const { error, conditions } = currentWeather;
   const basicParams = ['maxUVIndex', 'humidity', 'wind', 'windGust'].map(p => ({
     name: currentParamsIndex[p],
     value: conditions[p],

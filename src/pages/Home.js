@@ -13,23 +13,22 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import {
   getIpAddressApi,
   getLocationByIpApi,
-  getNeighborCitiesApi,
-  getCurrentWeatherApi,
-  getLocationByKeyApi,
+  // getNeighborCitiesApi,
+  // getCurrentWeatherApi,
+  // getLocationByKeyApi,
 } from '../lib/api';
-import { iconUrl } from '../consts/api';
 import { getHistoryWeather } from '../reducers/historyWeatherReducer';
 
 const Home = ({ showSideBar, isShowSideBar }) => {
   const [{ topCities: { loading, error, cities }, units }, dispatch] = useStateValue();
   const [backgroundImg, ] = useState(random(arrImg));
-  const [neighborsWeather, setNeighborWeather] = useState([]);
+  // const [neighborsWeather, setNeighborWeather] = useState([]);
 
   const [locationKeyStorage, setLocationKeyStorage] = useLocalStorage('history', []);
 
   useEffect(() => {
     getTopCities({ quantity: 50, dispatch, units });
-  }, []);
+  }, [dispatch, units]);
 
   useEffect(() => {
     const fetchNeighborCites = async () => {
@@ -68,7 +67,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
 
     fetchNeighborCites();
     
-  }, []);
+  }, [dispatch, locationKeyStorage.length, setLocationKeyStorage]);
 
   return (
     <div>

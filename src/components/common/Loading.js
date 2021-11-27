@@ -5,11 +5,14 @@ const Loading = ({ size }) => {
   switch(size) {
     case 'xs':
       dimension = 'w-8 h-8';
+      break;
     case 'md':
       dimension = 'w-16 h-16'
+      break;
     default:
       dimension = 'w-24 h-24';
-  } 
+      break;
+  }
   return (
     <div className="flex justify-center items-center">
       <div

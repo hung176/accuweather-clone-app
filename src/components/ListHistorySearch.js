@@ -5,7 +5,7 @@ import { removeSpaces } from '../ultils/removeSpaces';
 import HistoryLocation from './HistoryLocation';
 
 const ListHistoryLocations = () => {
-  const [{ historyWeather }, dispatch] = useStateValue();
+  const [{ historyWeather },] = useStateValue();
   const navigate = useNavigate();
 
   const handleNavigate = (location) => {

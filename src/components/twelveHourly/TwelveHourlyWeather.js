@@ -4,7 +4,7 @@ import ShowError from '../common/ShowError';
 import { twelveHourlyParamsIndex } from '../../consts/weatherParamsIndex';
 
 const TwelveHourlyWeather = ({ twelveHourly }) => {
-  const { loading, error, conditions } = twelveHourly;
+  const { error, conditions } = twelveHourly;
 
   if (error) {
     return (<ShowError error={error} />)

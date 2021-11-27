@@ -4,7 +4,7 @@ import AllergyParams from './AllergyParams';
 import { allergyIndex } from '../../consts/weatherParamsIndex';
 
 const Allergy = ({ oneDayForecast }) => {
-  const { loading, error, conditions } = oneDayForecast;
+  const { loading, conditions } = oneDayForecast;
 
   return (
     <div>

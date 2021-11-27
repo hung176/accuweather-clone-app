@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CogIcon, XIcon } from '@heroicons/react/outline';
 import { removeSpaces } from '../../ultils/removeSpaces';
 import { getLocationByKeyApi } from '../../lib/api';
@@ -34,7 +34,7 @@ const SideDrawer = ({ show, showSideBar }) => {
     };
 
     getInfoNewestCity();
-  }, [show]);
+  }, [locationStore, show]);
 
   const handleClickSideBar = (type) => {
     showSideBar(false);
