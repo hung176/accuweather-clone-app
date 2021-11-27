@@ -67,7 +67,7 @@ const Forecast = ({ showSideBar }) => {
     };
 
     getForecast();
-  }, [dispatch, navigate, setLocationKeyStore, forecastType, cityCode, units, isCurrent, isHourly, isDaily, isToday, country, city]);
+  }, [dispatch, forecastType, cityCode, units]);
 
   const handleNavigate = (type) => {
     navigate(`/en/${country}/${city}/${type}/${cityCode}`);
