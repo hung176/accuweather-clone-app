@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CogIcon, XIcon } from '@heroicons/react/outline';
-import { removeSpaces } from '../../ultils/removeSpaces';
-import { getLocationByKeyApi } from '../../lib/api';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { CogIcon, XIcon } from "@heroicons/react/outline";
+import { removeSpaces } from "../../ultils/removeSpaces";
+import { getLocationByKeyApi } from "../../lib/api";
+import Search from "../search/Search";
 
 const SideDrawer = ({ show, showSideBar }) => {
-  const forecastByArr = ['Today', 'Hourly', 'Daily'];
+  const forecastByArr = ["Today", "Hourly", "Daily"];
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
 
   const [locationNewest, setLocationNewest] = useState({});
 
-  const locationStore = localStorage.getItem('history');
+  const locationStore = localStorage.getItem("history");
 
   useEffect(() => {
     const getInfoNewestCity = async () => {
       let newestCityCode;
       if (locationStore) {
         newestCityCode = JSON.parse(locationStore)[0];
-      };
+      }
       try {
         const { data } = await getLocationByKeyApi(newestCityCode);
 
@@ -30,7 +33,6 @@ const SideDrawer = ({ show, showSideBar }) => {
       } catch (error) {
         console.log(error.message);
       }
-      
     };
 
     getInfoNewestCity();
@@ -38,24 +40,38 @@ const SideDrawer = ({ show, showSideBar }) => {
 
   const handleClickSideBar = (type) => {
     showSideBar(false);
-    navigate(`/en/${locationNewest?.countryId}/${locationNewest?.cityName}/${type}/${locationNewest?.locationKey}`)
+    navigate(
+      `/en/${locationNewest?.countryId}/${locationNewest?.cityName}/${type}/${locationNewest?.locationKey}`
+    );
   };
 
   return (
-    <div className={`h-screen p-4 sm:bg-white bg-accu sm:text-gray-700 text-white fixed top-20 sm:top-0 right-0 w-screen sm:w-80 z-50 shadow-2xl ${show ? 'translate-x-0' : 'translate-x-full'} transform  transition-transform`}>
+    <div
+      className={`h-screen p-4 sm:bg-white bg-accu sm:text-gray-700 text-white fixed top-20 sm:top-0 right-0 w-screen sm:w-80 z-50 shadow-2xl ${
+        show ? "translate-x-0" : "translate-x-full"
+      } transform  transition-transform`}
+    >
+      {!isHomePage && (
+        <div className="w-full block sm:hidden mb-4">
+          <Search small />
+        </div>
+      )}
       <div className="w-full flex justify-between items-center">
         <div
           className="flex justify-between items-center cursor-pointer"
           onClick={() => {
             showSideBar(false);
-            navigate('/en/setting');
+            navigate("/en/setting");
           }}
         >
           <CogIcon className="w-8 h-8 mr-2" />
           <span className="text-xl">Setting</span>
         </div>
         <div>
-          <XIcon className="w-8 h-8 cursor-pointer" onClick={() => showSideBar(false)} />
+          <XIcon
+            className="w-8 h-8 cursor-pointer"
+            onClick={() => showSideBar(false)}
+          />
         </div>
       </div>
 
@@ -64,7 +80,7 @@ const SideDrawer = ({ show, showSideBar }) => {
       </div>
 
       <ul className="h-1/3 flex flex-col items-start justify-evenly">
-        {forecastByArr.map(fc => (
+        {forecastByArr.map((fc) => (
           <li
             key={fc}
             className={`list-none cursor-pointer`}
