@@ -34,7 +34,7 @@ const SideDrawer = ({ show, showSideBar }) => {
     };
 
     getInfoNewestCity();
-  }, [locationStore, show]);
+  }, [locationStore]);
 
   const handleClickSideBar = (type) => {
     showSideBar(false);

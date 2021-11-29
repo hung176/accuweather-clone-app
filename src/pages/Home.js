@@ -25,10 +25,10 @@ const Home = ({ showSideBar, isShowSideBar }) => {
   // const [neighborsWeather, setNeighborWeather] = useState([]);
 
   const [locationKeyStorage, setLocationKeyStorage] = useLocalStorage('history', []);
-
+  console.log('home')
   useEffect(() => {
     getTopCities({ quantity: 50, dispatch, units });
-  }, [dispatch, units]);
+  }, [units]);
 
   useEffect(() => {
     const fetchNeighborCites = async () => {
@@ -41,7 +41,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
         setLocationKeyStorage(locationByIp.Key);
       };
 
-      getHistoryWeather({ dispatch });
+      // getHistoryWeather({ dispatch });
 
       // const { data } = await getNeighborCitiesApi(locationByIp.Key);
       // const locationKeys = data.map(d => d.Key);
@@ -67,7 +67,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
 
     fetchNeighborCites();
     
-  }, [dispatch, locationKeyStorage.length, setLocationKeyStorage]);
+  }, []);
 
   return (
     <div>
