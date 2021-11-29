@@ -22,10 +22,6 @@ const Search = ({ small, isForecastPage }) => {
 
   const [{ historyWeather }, dispatch] = useStateValue();
 
-  useEffect(() => {
-    getHistoryWeather({ dispatch });
-  }, [dispatch, cityCode]);
-
   const onFocus = (e) => {
     setBorder('rounded-t-md border-b-2 border-red-400');
     setShowOption(true);
