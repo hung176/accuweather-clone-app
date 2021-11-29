@@ -89,7 +89,7 @@ const Forecast = ({ showSideBar }) => {
   if (error) {
     return (
       <div>
-        <Nav showSideBar={showSideBar} />
+        <Nav pos="fixed" showSideBar={showSideBar} />
         <ShowError error={error} />
       </div>
     );
@@ -97,7 +97,7 @@ const Forecast = ({ showSideBar }) => {
 
   return (
     <div>
-      <Nav navInfor={navInfor} showSideBar={showSideBar} />
+      <Nav pos="fixed" navInfor={navInfor} showSideBar={showSideBar} />
       <div className="w-full mx-auto sm:w-3/4 flex flex-col items-start">
         <ListForecastBy
           forecastType={forecastType}

@@ -58,7 +58,7 @@ const Search = ({ small }) => {
   };
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative text-gray-600">
       <div
         className={`bg-white ${
           small ? "h-11" : ""
