@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { getCurrentLocation } from "../../reducers/currentLocationReducer";
 import { getAutocompleteSearch } from "../../reducers/autocompleteReducer";
@@ -18,7 +18,8 @@ const Search = ({ small }) => {
   const [query, setQuery] = React.useState("");
   const navigate = useNavigate();
 
-  const { cityCode } = useParams();
+  const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
 
   const [{ historyWeather }, dispatch] = useStateValue();
 
@@ -103,7 +104,7 @@ const Search = ({ small }) => {
 
           {query && <AutoComplete goToCitySearched={goToCitySearched} />}
 
-          {!query && (
+          {!query && !isHomePage && (
             <div className="w-full">
               <div className="px-2 font-semibold text-lg">Recent</div>
 

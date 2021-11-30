@@ -97,7 +97,7 @@ const Forecast = ({ showSideBar }) => {
 
   return (
     <div>
-      <Nav pos="fixed" navInfor={navInfor} showSideBar={showSideBar} />
+      <Nav pos="sticky" navInfor={navInfor} showSideBar={showSideBar} />
       <div className="w-full mx-auto sm:w-3/4 flex flex-col items-start">
         <ListForecastBy
           forecastType={forecastType}

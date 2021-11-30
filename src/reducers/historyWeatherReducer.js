@@ -1,37 +1,48 @@
-import { getLocationByKeyApi, getCurrentWeatherApi } from '../lib/api';
-import { pickCurrentWeatherData } from '../ultils/pickData';
+import { getLocationByKeyApi, getCurrentWeatherApi } from "../lib/api";
+import { pickCurrentWeatherData } from "../ultils/pickData";
 
-export const GET_HISTORY_WEATHER = 'GET_HISTORY_WEATHER';
+export const GET_HISTORY_WEATHER = "GET_HISTORY_WEATHER";
 
 export const historyWeatherInitialState = [];
 
 export const getHistoryWeather = async ({ dispatch }) => {
-  const units = window.localStorage.getItem('units') || 'metric';
-  const locationKeyStorage = JSON.parse(window.localStorage.getItem('history')) || [];
+  const units = window.localStorage.getItem("units") || "metric";
+  const lang = window.localStorage.getItem("lang") || "en-us";
 
-  const historyWeathers = await Promise.all(locationKeyStorage.map(async(locationKey) => {
-    const { data: locationInfo } = await getLocationByKeyApi(locationKey);
-    const { data: weatherInfo } = await getCurrentWeatherApi(locationKey);
+  const locationKeyStorage =
+    JSON.parse(window.localStorage.getItem("history")) || [];
 
-    return {
-      locationKey,
-      cityName: locationInfo.LocalizedName,
-      country: { id: locationInfo.Country.ID, name: locationInfo.Country.LocalizedName },
-      temperature: pickCurrentWeatherData(weatherInfo).temperature[units],
-      weatherText: pickCurrentWeatherData(weatherInfo).weatherText,
-      weatherIcon: pickCurrentWeatherData(weatherInfo).weatherIcon,
-    };
-  }));
+  const historyWeathers = await Promise.all(
+    locationKeyStorage.map(async (locationKey) => {
+      const { data: locationInfo } = await getLocationByKeyApi(locationKey);
+      const { data: weatherInfo } = await getCurrentWeatherApi(
+        locationKey,
+        lang
+      );
+
+      return {
+        locationKey,
+        cityName: locationInfo.LocalizedName,
+        country: {
+          id: locationInfo.Country.ID,
+          name: locationInfo.Country.LocalizedName,
+        },
+        temperature: pickCurrentWeatherData(weatherInfo).temperature[units],
+        weatherText: pickCurrentWeatherData(weatherInfo).weatherText,
+        weatherIcon: pickCurrentWeatherData(weatherInfo).weatherIcon,
+      };
+    })
+  );
   dispatch({
     type: GET_HISTORY_WEATHER,
-    payload: historyWeathers
+    payload: historyWeathers,
   });
 };
 
 export default function historyWeatherReducer(state, action) {
   switch (action.type) {
     case GET_HISTORY_WEATHER:
-      return action.payload
+      return action.payload;
 
     default:
       return state;

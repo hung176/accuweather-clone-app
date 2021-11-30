@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SunIcon, MenuAlt3Icon } from "@heroicons/react/solid";
 import countries from "i18n-iso-countries";
@@ -18,9 +18,6 @@ const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
       setMoveScroll(false);
     }
   };
-
-  window.addEventListener("scroll", changeBackground);
-
   const { pathname } = useLocation();
   const { forecastType } = useParams();
   const isHomePage = pathname === "/";
@@ -28,6 +25,9 @@ const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
   const isForecastPage = ["current", "today", "hourly", "daily"].includes(
     forecastType
   );
+  if (isHomePage) {
+    window.addEventListener("scroll", changeBackground);
+  }
 
   return (
     <div
