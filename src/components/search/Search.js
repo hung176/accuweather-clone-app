@@ -10,9 +10,11 @@ import { LocationMarkerIcon } from "@heroicons/react/solid";
 import AutoComplete from "./AutoComplete";
 import RecentSearch from "./RecentSearch ";
 import { removeSpaces } from "../../ultils/removeSpaces";
-import { getHistoryWeather } from "../../reducers/historyWeatherReducer";
+import { useTranslation } from "react-i18next";
 
 const Search = ({ small }) => {
+  const { t, i18n } = useTranslation();
+
   const [border, setBorder] = React.useState("rounded-md");
   const [showOption, setShowOption] = React.useState(false);
   const [query, setQuery] = React.useState("");
@@ -71,7 +73,7 @@ const Search = ({ small }) => {
           name="search"
           value={query}
           onChange={handleChange}
-          placeholder="Search Location"
+          placeholder={t("searchLocation")}
           autoComplete="off"
           onFocus={onFocus}
           onBlur={onBlur}
@@ -93,13 +95,13 @@ const Search = ({ small }) => {
       </div>
 
       {showOption && (
-        <div className="rounded-b-md bg-white w-full flex flex-col items-center text-gray-400 absolute z-40">
+        <div className="rounded-b-md shadow-2xl bg-white w-full flex flex-col items-center text-gray-400 absolute z-40">
           <div
             className="w-full flex items-center py-2 px-4 cursor-pointer hover:bg-gray-200 hover:text-gray-600"
             onMouseDown={handleCurrentLocation}
           >
             <LocationMarkerIcon className="w-6 h-6 text-red-400 mr-2" />
-            <span className={`font-light`}>Use your current location</span>
+            <span className={`font-light`}>{t("currentLocation")}</span>
           </div>
 
           {query && <AutoComplete goToCitySearched={goToCitySearched} />}

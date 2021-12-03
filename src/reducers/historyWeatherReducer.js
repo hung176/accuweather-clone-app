@@ -7,14 +7,17 @@ export const historyWeatherInitialState = [];
 
 export const getHistoryWeather = async ({ dispatch }) => {
   const units = window.localStorage.getItem("units") || "metric";
-  const lang = window.localStorage.getItem("lang") || "en-us";
+  const lang = window.localStorage.getItem("lang") || "en";
 
   const locationKeyStorage =
     JSON.parse(window.localStorage.getItem("history")) || [];
 
   const historyWeathers = await Promise.all(
     locationKeyStorage.map(async (locationKey) => {
-      const { data: locationInfo } = await getLocationByKeyApi(locationKey);
+      const { data: locationInfo } = await getLocationByKeyApi(
+        locationKey,
+        lang
+      );
       const { data: weatherInfo } = await getCurrentWeatherApi(
         locationKey,
         lang

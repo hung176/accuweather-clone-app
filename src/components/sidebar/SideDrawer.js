@@ -14,6 +14,7 @@ const SideDrawer = ({ show, showSideBar }) => {
   const [locationNewest, setLocationNewest] = useState({});
 
   const locationStore = localStorage.getItem("history");
+  const langStore = localStorage.getItem("lang") || "en";
 
   useEffect(() => {
     const getInfoNewestCity = async () => {
@@ -22,7 +23,7 @@ const SideDrawer = ({ show, showSideBar }) => {
         newestCityCode = JSON.parse(locationStore)[0];
       }
       try {
-        const { data } = await getLocationByKeyApi(newestCityCode);
+        const { data } = await getLocationByKeyApi(newestCityCode, langStore);
 
         setLocationNewest({
           locationKey: data.Key,

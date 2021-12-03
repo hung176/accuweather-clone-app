@@ -32,12 +32,13 @@ const Forecast = ({ showSideBar }) => {
   const isToday = forecastType === "today";
   const isHourly = forecastType === "hourly";
   const isDaily = forecastType === "daily";
+  const langStore = localStorage.getItem("lang");
 
   useEffect(() => {
     const getForecast = async () => {
       try {
         setError("");
-        const { data } = await getLocationByKeyApi(cityCode);
+        const { data } = await getLocationByKeyApi(cityCode, langStore);
         const correctCountryId = removeSpaces(data.Country.ID);
         const correctCity = removeSpaces(data.LocalizedName);
 

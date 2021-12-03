@@ -1,0 +1,23 @@
+{
+  "maxUVIndex": "Max UV Index",
+  "wind": "Wind",
+  "windGust": "Wind Gusts",
+  "humidity": "Humidity",
+  "indoorHumidity": "Indoor Humidity",
+  "dewPoint": "Dew Point",
+  "pressure": "Pressure",
+  "cloudCover": "Cloud Cover",
+  "visibility": "Visibility",
+  "cloudCeiling": "Cloud Ceiling",
+  "rainProbability":"Probability of Precipitation",
+  "thunderProbability": "Probability of Thunderstorms",
+  "precipitation": "Precipitation",
+  "grass": "Grass Pollen",
+  "mold": "Mold",
+  "ragweed": "Ragweed Pollen",
+  "tree": "Tree Pollen",
+
+  "topCity": "TOP CITIES WEATHER CONDITIONS",
+  "searchLocation": "Search Location",
+  "currentLocation": "Use your current location"
+}

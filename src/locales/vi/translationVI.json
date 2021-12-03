@@ -1,0 +1,23 @@
+{
+  "maxUVIndex": "Chỉ số UV tối đa",
+  "wind": "Gió",
+  "windGust": "Gió giật mạnh",
+  "humidity": "Độ ẩm",
+  "indoorHumidity": "Độ ẩm trong nhà",
+  "dewPoint": "Điểm sương",
+  "pressure": "Khí áp",
+  "cloudCover": "Mật độ mây",
+  "visibility": "Tầm nhìn",
+  "cloudCeiling": "Trần mây",
+  "rainProbability":"Khả năng dự báo",
+  "thunderProbability": "Dự báo Dông",
+  "precipitation": "Lượng mưa",
+  "grass": "Phấn hoa từ cỏ",
+  "mold": "Nấm mốc",
+  "ragweed": "Phấn hoa từ cỏ lưỡi chó",
+  "tree": "Phấn hoa từ cây cối",
+
+  "topCity": "ĐIỀU KIỆN THỜI TIẾT CÁC THÀNH PHỐ ",
+  "searchLocation": "Tìm kiếm",
+  "currentLocation": "Sử dụng địa điểm hiện tại"
+}

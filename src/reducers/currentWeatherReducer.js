@@ -17,7 +17,7 @@ export const currentWeatherInitialState = {
 
 export const getCurrentWeather = async ({ dispatch, locationKey }) => {
   const units = window.localStorage.getItem("units") || "metric";
-  const lang = window.localStorage.getItem("lang") || "en-us";
+  const lang = window.localStorage.getItem("lang") || "en";
 
   try {
     const { data } = await getCurrentWeatherApi(locationKey, lang);

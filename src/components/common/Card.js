@@ -1,22 +1,19 @@
-import React from 'react';
-import WeatherHeader from './WeatherHeader';
-import WeatherIconTemp from './WeatherIconTemp';
-import WeatherRealFeel from './WeatherRealFeel';
-import WeatherText from './WeatherText';
-import ListWeatherParams from './ListWeatherParams';
-import Loading from './Loading';
-import ShowError from './ShowError';
+import React from "react";
+import WeatherHeader from "./WeatherHeader";
+import WeatherIconTemp from "./WeatherIconTemp";
+import WeatherRealFeel from "./WeatherRealFeel";
+import WeatherText from "./WeatherText";
+import ListWeatherParams from "./ListWeatherParams";
+import Loading from "./Loading";
+import ShowError from "./ShowError";
+import { useTranslation } from "react-i18next";
 
-const Card = ({
-  header,
-  loading,
-  error,
-  paramsIndex,
-  conditions,
-}) => {
-  const weatherArr = Object.keys(paramsIndex).map(p => ({
-    name: paramsIndex[p],
-    value: conditions[p]
+const Card = ({ header, loading, error, paramsIndex, conditions }) => {
+  const { t, i18n } = useTranslation();
+
+  const weatherArr = Object.keys(paramsIndex).map((p) => ({
+    name: t(p),
+    value: conditions[p],
   }));
 
   return (
@@ -46,9 +43,9 @@ const Card = ({
               realFeelShade={conditions.realFeelShade}
             />
           </div>
-    
+
           <WeatherText weatherText={conditions.weatherText} />
-    
+
           <ListWeatherParams weatherArr={weatherArr} />
         </div>
       )}

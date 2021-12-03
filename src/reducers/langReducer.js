@@ -1,6 +1,6 @@
 export const CHANGE_LANG = "CHANGE_LANG";
 
-export const langInitialState = "en-us";
+export const langInitialState = localStorage.getItem("lang") || "en";
 
 export const changeLang = ({ dispatch, lang }) => {
   window.localStorage.setItem("lang", lang);

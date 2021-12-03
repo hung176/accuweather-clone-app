@@ -12,21 +12,27 @@ import ShowError from "../components/common/ShowError";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { getIpAddressApi, getLocationByIpApi } from "../lib/api";
 import { getHistoryWeather } from "../reducers/historyWeatherReducer";
+import { useTranslation } from "react-i18next";
 
 const Home = ({ showSideBar, isShowSideBar }) => {
+  const { t, i18n } = useTranslation();
   const [
     {
       topCities: { loading, error, cities },
+      lang,
       units,
     },
     dispatch,
   ] = useStateValue();
   const [backgroundImg] = useState(random(arrImg));
 
+  console.log("lang in home", lang);
+
   const [locationKeyStorage, setLocationKeyStorage] = useLocalStorage(
     "history",
     []
   );
+  window.localStorage.setItem("lang", lang ? lang : "en");
   useEffect(() => {
     getTopCities({ quantity: 50, dispatch, units });
   }, [units]);
@@ -37,7 +43,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
       if (!ip) {
         return;
       }
-      const { data: locationByIp } = await getLocationByIpApi(ip);
+      const { data: locationByIp } = await getLocationByIpApi(ip, lang);
       if (locationKeyStorage.length === 0) {
         setLocationKeyStorage(locationByIp.Key);
       }
@@ -81,7 +87,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
         {!loading && !error && (
           <div className="pb-4 w-full flex flex-col items-center">
             <div className="text-gray-500 w-full sm:w-4/5 font-semibold uppercase mt-10 mb-2">
-              Top Cities Weather Conditions
+              {t("topCity")}
             </div>
             <ListOfCities cities={cities} />
           </div>

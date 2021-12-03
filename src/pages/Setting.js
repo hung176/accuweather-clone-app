@@ -8,12 +8,12 @@ import { useStateValue } from "../reducers";
 const Setting = ({ showSideBar }) => {
   const [, dispatch] = useStateValue();
   const units = window.localStorage.getItem("units") || "metric";
-  const lang = window.localStorage.getItem("lang") || "en-us";
+  const lang = window.localStorage.getItem("lang") || "en";
   const settings = [
     {
       title: "Language",
       options: [
-        { label: "English", value: "en-us" },
+        { label: "English", value: "en" },
         { label: "Vietnamese", value: "vi" },
       ],
     },
@@ -29,7 +29,6 @@ const Setting = ({ showSideBar }) => {
   const unitArr = ["metric", "imperial"];
 
   const handleChange = (value) => {
-    console.log(value);
     if (unitArr.includes(value)) {
       changeUnits({ dispatch, units: value });
     } else {
