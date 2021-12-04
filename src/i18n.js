@@ -14,8 +14,6 @@ const resources = {
 
 const lngLocalStore = localStorage.getItem("lang") || "en";
 
-console.log("lngLocalStore", lngLocalStore);
-
 i18n.use(initReactI18next).init({
   resources,
   lng: lngLocalStore,

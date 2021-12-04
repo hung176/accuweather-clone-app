@@ -20,7 +20,7 @@ import { getHistoryWeather } from "../reducers/historyWeatherReducer";
 
 const Forecast = ({ showSideBar }) => {
   const [
-    { currentWeather, oneDayForecast, twelveHourly, units, fiveDay },
+    { currentWeather, oneDayForecast, twelveHourly, units, lang, fiveDay },
     dispatch,
   ] = useStateValue();
   const navigate = useNavigate();
@@ -35,13 +35,12 @@ const Forecast = ({ showSideBar }) => {
   const isToday = forecastType === "today";
   const isHourly = forecastType === "hourly";
   const isDaily = forecastType === "daily";
-  const langStore = localStorage.getItem("lang");
 
   useEffect(() => {
     const getForecast = async () => {
       try {
         setError("");
-        const { data } = await getLocationByKeyApi(cityCode, langStore);
+        const { data } = await getLocationByKeyApi(cityCode);
         const correctCountryId = removeSpaces(data.Country.ID);
         const correctCity = removeSpaces(data.LocalizedName);
 
@@ -49,7 +48,7 @@ const Forecast = ({ showSideBar }) => {
 
         if (country !== correctCountryId || city !== correctCity) {
           navigate(
-            `/en/${correctCountryId}/${correctCity}/${forecastType}/${cityCode}`
+            `/${correctCountryId}/${correctCity}/${forecastType}/${cityCode}`
           );
         }
 
@@ -76,11 +75,11 @@ const Forecast = ({ showSideBar }) => {
   }, [cityCode, locationKeyStore]);
 
   const handleNavigate = (type) => {
-    navigate(`/en/${country}/${city}/${type}/${cityCode}`);
+    navigate(`/${country}/${city}/${type}/${cityCode}`);
   };
 
   const handleNavigateToCurrent = () => {
-    navigate(`/en/${country}/${city}/current/${cityCode}`);
+    navigate(`/${country}/${city}/current/${cityCode}`);
   };
 
   const navInfor = {

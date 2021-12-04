@@ -34,11 +34,11 @@ function App() {
           }
         />
         <Route
-          path="/:en/:country/:city/:forecastType/:cityCode"
+          path="/:country/:city/:forecastType/:cityCode"
           element={<Forecast showSideBar={setIsOpenSideDrawer} />}
         />
         <Route
-          path="/:en/setting"
+          path="/setting"
           element={<Setting showSideBar={setIsOpenSideDrawer} />}
         />
         <Route

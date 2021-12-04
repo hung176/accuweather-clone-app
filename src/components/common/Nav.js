@@ -19,12 +19,8 @@ const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
     }
   };
   const { pathname } = useLocation();
-  const { forecastType } = useParams();
   const isHomePage = pathname === "/";
   const isShowBackground = moveScroll || !isHomePage;
-  const isForecastPage = ["current", "today", "hourly", "daily"].includes(
-    forecastType
-  );
   if (isHomePage) {
     window.addEventListener("scroll", changeBackground);
   }
@@ -55,7 +51,7 @@ const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
           >
             AccuWeather
           </div>
-          {isForecastPage && navInfor && (
+          {!isHomePage && navInfor && (
             <div className="flex items-center text-white ml-4">
               <span className="truncate">{`${capitalizeFirstLetter(
                 navInfor?.city

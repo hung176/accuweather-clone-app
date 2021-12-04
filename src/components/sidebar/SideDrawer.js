@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CogIcon, XIcon } from "@heroicons/react/outline";
 import { removeSpaces } from "../../ultils/removeSpaces";
@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 const SideDrawer = ({ show, showSideBar, historyWeather }) => {
   const { t } = useTranslation();
   const forecastByArr = [t("today"), t("hourly"), t("daily")];
+  const forecastValue = ["today", "hourly", "daily"];
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isHomePage = pathname === "/";
@@ -16,9 +17,7 @@ const SideDrawer = ({ show, showSideBar, historyWeather }) => {
 
   const handleClickSideBar = (type) => {
     showSideBar(false);
-    navigate(
-      `/en/${removeSpaces(country.id)}/${cityName}/${type}/${locationKey}`
-    );
+    navigate(`/${removeSpaces(country.id)}/${cityName}/${type}/${locationKey}`);
   };
 
   return (
@@ -29,7 +28,7 @@ const SideDrawer = ({ show, showSideBar, historyWeather }) => {
     >
       {!isHomePage && (
         <div className="w-full block sm:hidden mb-4">
-          <Search small />
+          <Search small showSideBar={showSideBar} />
         </div>
       )}
       <div className="w-full flex justify-between items-center">
@@ -37,7 +36,7 @@ const SideDrawer = ({ show, showSideBar, historyWeather }) => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => {
             showSideBar(false);
-            navigate("/en/setting");
+            navigate("/setting", { state: { country, cityName } });
           }}
         >
           <CogIcon className="w-8 h-8 mr-2" />
@@ -58,11 +57,11 @@ const SideDrawer = ({ show, showSideBar, historyWeather }) => {
       )}
 
       <ul className="h-1/3 flex flex-col items-start justify-evenly">
-        {forecastByArr.map((fc) => (
+        {forecastByArr.map((fc, index) => (
           <li
             key={fc}
             className={`list-none cursor-pointer`}
-            onClick={() => handleClickSideBar(removeSpaces(fc))}
+            onClick={() => handleClickSideBar(forecastValue[index])}
           >
             {fc}
           </li>

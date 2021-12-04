@@ -12,8 +12,8 @@ import RecentSearch from "./RecentSearch ";
 import { removeSpaces } from "../../ultils/removeSpaces";
 import { useTranslation } from "react-i18next";
 
-const Search = ({ small }) => {
-  const { t, i18n } = useTranslation();
+const Search = ({ small, showSideBar }) => {
+  const { t } = useTranslation();
 
   const [border, setBorder] = React.useState("rounded-md");
   const [showOption, setShowOption] = React.useState(false);
@@ -35,6 +35,7 @@ const Search = ({ small }) => {
   };
 
   const handleCurrentLocation = () => {
+    showSideBar(false);
     getCurrentLocation({ dispatch, navigate });
   };
 
@@ -52,6 +53,7 @@ const Search = ({ small }) => {
   };
 
   const goToCitySearched = (location) => {
+    showSideBar(false);
     const { countryId, localizedName, locationKey } = location;
     navigate(
       `/en/${removeSpaces(countryId)}/${removeSpaces(

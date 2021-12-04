@@ -1,8 +1,5 @@
 import axios from "./axios";
-import { apiKey1, apiKey2, apiKey3, apiKey4 } from "../consts/api";
-import { random } from "../ultils/random";
-
-const apiKey = random([apiKey1, apiKey2, apiKey3, apiKey4]);
+import { apiKey } from "../consts/api";
 
 export const getCurrentLocationApi = (latitude, longtitude) =>
   axios.get(

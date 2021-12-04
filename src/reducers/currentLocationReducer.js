@@ -1,7 +1,7 @@
 import { getCurrentLocationApi } from "../lib/api";
 import { removeSpaces } from "../ultils/removeSpaces";
 
-export const GET_CURRENT_LOCATION = 'GET_CURRENT_LOCATION';
+export const GET_CURRENT_LOCATION = "GET_CURRENT_LOCATION";
 
 export const currentLocaitonInitialState = {};
 
@@ -20,7 +20,7 @@ export const getCurrentLocation = ({ dispatch, navigate }) => {
     const cityName = removeSpaces(data.LocalizedName);
     const locationKey = data.Key;
 
-    navigate(`/en/${countryId}/${cityName}/current/${locationKey}`);
+    navigate(`/${countryId}/${cityName}/current/${locationKey}`);
   });
 };
 
@@ -28,8 +28,8 @@ export const getCurrentLocation = ({ dispatch, navigate }) => {
 export default function currentLocationReducer(state, action) {
   switch (action.type) {
     case GET_CURRENT_LOCATION:
-      return action.payload
-    
+      return action.payload;
+
     default:
       return state;
   }
