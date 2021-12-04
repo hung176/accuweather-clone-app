@@ -56,7 +56,7 @@ const Search = ({ small, showSideBar }) => {
     showSideBar(false);
     const { countryId, localizedName, locationKey } = location;
     navigate(
-      `/en/${removeSpaces(countryId)}/${removeSpaces(
+      `/${removeSpaces(countryId)}/${removeSpaces(
         localizedName
       )}/current/${locationKey}`
     );

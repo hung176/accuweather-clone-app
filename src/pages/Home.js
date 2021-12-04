@@ -65,7 +65,7 @@ const Home = ({ showSideBar, isShowSideBar }) => {
         />
         <div className="mt-12 w-full flex justify-center items-center">
           <div className="w-3/4">
-            <Search />
+            <Search showSideBar={showSideBar} />
           </div>
         </div>
 

@@ -15,7 +15,7 @@ export default function ListForecastBy({ forecastType, onNavigate }) {
             key={type}
             type={type}
             value={forecastValue[index]}
-            isActive={type === forecastType}
+            isActive={forecastValue[index] === forecastType}
             onNavigate={onNavigate}
           />
         ))}
