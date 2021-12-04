@@ -26,7 +26,10 @@ const Forecast = ({ showSideBar }) => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const { country, city, forecastType, cityCode } = useParams();
-  const [, setLocationKeyStore] = useLocalStorage("history", []);
+  const [locationKeyStore, setLocationKeyStore] = useLocalStorage(
+    "history",
+    []
+  );
 
   const isCurrent = forecastType === "current";
   const isToday = forecastType === "today";
@@ -70,7 +73,7 @@ const Forecast = ({ showSideBar }) => {
 
   useEffect(() => {
     getHistoryWeather({ dispatch });
-  }, [cityCode]);
+  }, [cityCode, locationKeyStore]);
 
   const handleNavigate = (type) => {
     navigate(`/en/${country}/${city}/${type}/${cityCode}`);

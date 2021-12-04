@@ -19,5 +19,19 @@
 
   "topCity": "ĐIỀU KIỆN THỜI TIẾT CÁC THÀNH PHỐ ",
   "searchLocation": "Tìm kiếm",
-  "currentLocation": "Sử dụng địa điểm hiện tại"
+  "currentLocation": "Sử dụng địa điểm hiện tại",
+
+  "today": "hôm nay",
+  "hourly": "theo giờ",
+  "daily": "hàng ngày",
+  "currentWeather": "Thời tiết hiện tại ",
+  "day": "Ngày",
+  "night": "Đêm",
+  "sunRiseSet": "MẶT TRỜI MỌC / LẶN",
+  "rise": "Mọc",
+  "set": "Lặn",
+  "moreDetails": "CHI TIẾT",
+  "allergy":"DỰ BÁO DỊ ỨNG",
+  "setting": "Cài đặt",
+  "weather": "Thời tiết"
 }

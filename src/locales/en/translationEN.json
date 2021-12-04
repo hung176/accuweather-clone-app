@@ -19,5 +19,19 @@
 
   "topCity": "TOP CITIES WEATHER CONDITIONS",
   "searchLocation": "Search Location",
-  "currentLocation": "Use your current location"
+  "currentLocation": "Use your current location",
+
+  "today": "today",
+  "hourly": "hourly",
+  "daily": "daily",
+  "currentWeather": "Current Weather",
+  "day": "day",
+  "night": "night",
+  "sunRiseSet": "SUNRISE/SUNSET",
+  "rise": "Rise",
+  "set": "Set",
+  "moreDetails": "MORE DETAILS",
+  "allergy": "ALLERGY OUTLOOK",
+  "setting": "Setting",
+  "weather": "Weather"
 }

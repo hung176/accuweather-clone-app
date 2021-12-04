@@ -26,8 +26,6 @@ const Home = ({ showSideBar, isShowSideBar }) => {
   ] = useStateValue();
   const [backgroundImg] = useState(random(arrImg));
 
-  console.log("lang in home", lang);
-
   const [locationKeyStorage, setLocationKeyStorage] = useLocalStorage(
     "history",
     []

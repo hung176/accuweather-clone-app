@@ -10,15 +10,19 @@ import NotFound from "./components/NotFound";
 
 function App() {
   const [isOpenSideDrawer, setIsOpenSideDrawer] = useState(false);
-  const [{ lang }] = useStateValue();
-  console.log("lang from store", lang);
+  const [{ lang, historyWeather }] = useStateValue();
 
   useEffect(() => {
     i18n.changeLanguage(lang);
   }, [lang]);
+
   return (
     <div>
-      <SideDrawer show={isOpenSideDrawer} showSideBar={setIsOpenSideDrawer} />
+      <SideDrawer
+        show={isOpenSideDrawer}
+        showSideBar={setIsOpenSideDrawer}
+        historyWeather={historyWeather[0] || {}}
+      />
       <Routes>
         <Route
           path="/"

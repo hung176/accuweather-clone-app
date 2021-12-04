@@ -1,18 +1,19 @@
-import React from 'react';
-import AllergyHeader from './AllergyHeader';
-import AllergyParams from './AllergyParams';
-import { allergyIndex } from '../../consts/weatherParamsIndex';
+import React from "react";
+import AllergyHeader from "./AllergyHeader";
+import AllergyParams from "./AllergyParams";
+import { useTranslation } from "react-i18next";
 
 const Allergy = ({ oneDayForecast }) => {
   const { loading, conditions } = oneDayForecast;
+  const { t } = useTranslation();
 
   return (
     <div>
       {!loading && (
         <div className="w-full bg-white mt-4">
-          <AllergyHeader />
+          <AllergyHeader t={t} />
           <div>
-            <AllergyParams allergy={conditions.allergy} allergyIndex={allergyIndex} />
+            <AllergyParams allergy={conditions.allergy} t={t} />
           </div>
         </div>
       )}

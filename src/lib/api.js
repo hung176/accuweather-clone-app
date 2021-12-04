@@ -10,7 +10,7 @@ export const getCurrentLocationApi = (latitude, longtitude) =>
   );
 
 export const getLocationByKeyApi = (locationKey, lang = "en-us") =>
-  axios.get(`/locations/v1/${locationKey}?apikey=${apiKey4}&language=${lang}`);
+  axios.get(`/locations/v1/${locationKey}?apikey=${apiKey}&language=${lang}`);
 
 export const getTopCitiesApi = (quantity, lang = "en-us") =>
   axios.get(
@@ -52,7 +52,7 @@ export const getHourlyTwelveWeatherApi = (
   );
 
 export const getLocationByIpApi = (ipAddress) =>
-  axios.get(`/locations/v1/cities/ipaddress?apikey=${apiKey4}&q=${ipAddress}`);
+  axios.get(`/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${ipAddress}`);
 
 export const getIpAddressApi = async () => {
   const response = await fetch("https://api.ipify.org/?format=json");
@@ -61,4 +61,4 @@ export const getIpAddressApi = async () => {
 };
 
 export const getNeighborCitiesApi = (locationKey, lang = "en-us") =>
-  axios.get(`/locations/v1/cities/neighbors/${locationKey}?apikey=${apiKey4}`);
+  axios.get(`/locations/v1/cities/neighbors/${locationKey}?apikey=${apiKey}`);
