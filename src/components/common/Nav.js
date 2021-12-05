@@ -71,7 +71,7 @@ const Nav = ({ pos, navInfor, showSideBar, isShowSideBar }) => {
 
         <div className="flex sm:w-1/2 justify-end items-center">
           <div className="hidden sm:block sm:w-3/4 mr-3">
-            {!isHomePage && <Search small />}
+            {!isHomePage && <Search small showSideBar={showSideBar} />}
           </div>
           <MenuAlt3Icon
             className="h-10 w-10 text-white cursor-pointer"
